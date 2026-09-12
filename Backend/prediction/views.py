@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from predictor import predict_image
+from predictor import predict_image, predict_crop
 from .disease_info import DISEASE_INFO
 
 class PredictDiseaseView(APIView):
@@ -51,3 +51,17 @@ class PredictDiseaseView(APIView):
             "severity": info["severity"]
         })
         # return Response(status.HTTP_200_OK)
+
+class PredictCropView(APIView):
+    def post(self, request):
+        try:
+            required_fields = ["soil", "season", "water_source", "soil_ph", "temperature", "humidity", "nitrogen", "phosphorus", "potassium"]
+            
+            for field in required_fields:
+                if field not in request.data:
+                    return Response({"error": f"Missing required field: {field}"}, status=status.HTTP_400_BAD_REQUEST)
+            
+            recommendations = predict_crop(request.data)
+            return Response({"recommendations": recommendations}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

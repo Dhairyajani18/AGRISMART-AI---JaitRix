@@ -4,6 +4,8 @@ import torch
 import torch.nn as nn
 from torchvision import models, transforms
 from PIL import Image
+import joblib
+import pandas as pd
 
 # Folder where predictor.py exists
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -21,6 +23,21 @@ CLASS_PATH = os.path.join(
     MODEL_DIR,
     "class_names.json"
 )
+
+CROP_MODEL_PATH = os.path.join(
+    MODEL_DIR,
+    "crop_model.joblib"
+)
+
+# -----------------------------
+# 0. Load Crop Model
+# -----------------------------
+crop_model = None
+try:
+    crop_model = joblib.load(CROP_MODEL_PATH)
+    print("Crop model loaded successfully!")
+except Exception as e:
+    print("Error loading crop model:", e)
 
 # -----------------------------
 # 1. Device
@@ -115,3 +132,36 @@ def predict_image(image_file):
         "class": class_names[predicted.item()],
         "confidence": float(confidence.item())
     }
+
+# -----------------------------
+# 7. Crop Prediction function
+# -----------------------------
+def predict_crop(data_dict):
+    if crop_model is None:
+        raise ValueError("Crop model is not loaded.")
+        
+    df = pd.DataFrame([{
+        "SOIL": data_dict.get("soil"),
+        "SEASON": data_dict.get("season"),
+        "WATER_SOURCE": data_dict.get("water_source"),
+        "SOIL_PH": float(data_dict.get("soil_ph", 0)),
+        "TEMP": float(data_dict.get("temperature", 0)),
+        "RELATIVE_HUMIDITY": float(data_dict.get("humidity", 0)),
+        "N": float(data_dict.get("nitrogen", 0)),
+        "P": float(data_dict.get("phosphorus", 0)),
+        "K": float(data_dict.get("potassium", 0))
+    }])
+    
+    probabilities = crop_model.predict_proba(df)[0]
+    classes = crop_model.classes_
+    
+    top_indices = probabilities.argsort()[-3:][::-1]
+    
+    recommendations = []
+    for idx in top_indices:
+        recommendations.append({
+            "crop": classes[idx],
+            "confidence": round(float(probabilities[idx]) * 100, 2)
+        })
+        
+    return recommendations
