@@ -141,15 +141,15 @@ def predict_crop(data_dict):
         raise ValueError("Crop model is not loaded.")
         
     df = pd.DataFrame([{
-        "SOIL": data_dict.get("soil"),
-        "SEASON": data_dict.get("season"),
-        "WATER_SOURCE": data_dict.get("water_source"),
-        "SOIL_PH": float(data_dict.get("soil_ph", 0)),
-        "TEMP": float(data_dict.get("temperature", 0)),
-        "RELATIVE_HUMIDITY": float(data_dict.get("humidity", 0)),
-        "N": float(data_dict.get("nitrogen", 0)),
-        "P": float(data_dict.get("phosphorus", 0)),
-        "K": float(data_dict.get("potassium", 0))
+        "SOIL": data_dict.get("SOIL"),
+        "SEASON": data_dict.get("SEASON"),
+        "WATER_SOURCE": data_dict.get("WATER_SOURCE"),
+        "SOIL_PH": float(data_dict.get("SOIL_PH", 0)),
+        "TEMP": float(data_dict.get("TEMP", 0)),
+        "RELATIVE_HUMIDITY": float(data_dict.get("RELATIVE_HUMIDITY", 0)),
+        "N": float(data_dict.get("N", 0)),
+        "P": float(data_dict.get("P", 0)),
+        "K": float(data_dict.get("K", 0))
     }])
     
     probabilities = crop_model.predict_proba(df)[0]
