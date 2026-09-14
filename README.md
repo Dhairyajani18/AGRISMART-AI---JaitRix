@@ -151,10 +151,12 @@ Farm and soil inputs
 
 ## 6. Known Limitations
 
-- A disease confusion matrix is not stored in this repository.
-- The disease training dataset and training process are not included here, so its ability to generalize from controlled images to field images cannot be verified from the repository.
-- Crop recommendations depend on the quality of the supplied soil and environmental values.
-- The crop model must be trained locally before its API endpoint can return recommendations.
+* **Limited disease coverage:** The disease detection model is trained to recognize a defined set of 38 disease/healthy classes and does not cover all possible crop diseases.
+* **Real-world conditions:** Prediction performance may vary with lighting, image quality, complex backgrounds, occlusion, and disease severity.
+* **Similar symptoms:** Some visually similar diseases may occasionally be misclassified.
+* **Input dependency:** Crop recommendations depend on the accuracy and completeness of the soil and environmental inputs provided by the user.
+* **Weather dependency:** Weather information depends on the availability and accuracy of the external weather data service.
+
 
 ## 7. Demo and Deployment
 
