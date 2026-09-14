@@ -80,6 +80,7 @@ class PredictWeatherView(APIView):
                 return Response({"error": "Either city or lat/lon are required"}, status=status.HTTP_400_BAD_REQUEST)
 
             api_key = os.environ.get('OPENWEATHER_API_KEY')
+            # print("fdslf:- ",api_key)
             if not api_key:
                 return Response({"error": "OpenWeather API key not configured"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 

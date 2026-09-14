@@ -1,5 +1,12 @@
+import sys
 from predictor import predict_image
 
-result = predict_image(r"C:\Users\Preyans\Downloads\041d97fc-da3d-4420-8f6f-2be0e7070f28___FREC_Pwd.M 0392.JPG")
+if len(sys.argv) < 2:
+    print("Usage: python predict.py <image_path>")
+    sys.exit(1)
 
-print(result)
+image_path = sys.argv[1]
+
+result = predict_image(image_path)
+
+print("prediction:- \n",result)

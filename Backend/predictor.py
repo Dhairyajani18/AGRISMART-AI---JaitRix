@@ -35,7 +35,7 @@ CROP_MODEL_PATH = os.path.join(
 crop_model = None
 try:
     crop_model = joblib.load(CROP_MODEL_PATH)
-    print("Crop model loaded successfully!")
+    # print("Crop model loaded successfully!")
 except Exception as e:
     print("Error loading crop model:", e)
 
@@ -55,7 +55,7 @@ print("Using device:", device)
 with open(CLASS_PATH, "r") as f:
     class_names = json.load(f)
 
-print("Number of classes:", len(class_names))
+# print("Number of classes:", len(class_names))
 
 
 # -----------------------------
@@ -88,7 +88,7 @@ model = model.to(device)
 
 model.eval()
 
-print("Model loaded successfully!")
+# print("Model loaded successfully!")
 
 
 # -----------------------------
