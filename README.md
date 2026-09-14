@@ -172,4 +172,3 @@ Demo Video: [ADD DEMO VIDEO LINK]
 - Scikit-learn for crop recommendation training and inference.
 - OpenWeather API and ISRIC SoilGrids are used by the optional crop-form data helpers.
 
-Third-party datasets, model sources, and licenses should be added here before submission once verified.
