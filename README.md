@@ -127,7 +127,6 @@ The repository contains the trained weights and class list, but not the disease 
 | Disease detection | EfficientNet-B0 | 224 x 224 RGB input, dropout 0.3, 38 output classes | Development-test accuracy: 99.63% \| Macro-F1: 99.47% \| Macro precision: 99.52% \| Macro recall: 99.43% \| Weighted F1: 99.63% \| Test loss: 0.0114 |
 | Crop recommendation | Random Forest | 200 trees, one-hot encoding for soil, season, and water source | Development-test accuracy: 98.51% \| Macro-F1: 98.51% |
 
-These are development-test results, not the official SIH held-out field-test score.
 
 Disease model creation and training process: [Google Colab notebook](https://colab.research.google.com/drive/1-nR4wYrACsRQxC3Nun5PpQG69_-mUUpt?usp=sharing)
 
