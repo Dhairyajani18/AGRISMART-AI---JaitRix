@@ -107,19 +107,19 @@ curl -X POST http://127.0.0.1:8000/api/recommend-crop/ -H "Content-Type: applica
 - Dataset: PlantVillage
 - Images: 54,305 across 38 disease and healthy classes
 - Split: 43,429 training, 5,417 validation, and 5,459 development-test images
-- Dataset source/license: [ADD VERIFIED SOURCE AND LICENSE]
+- Dataset source/license: [PlantVillage Dataset](https://www.kaggle.com/abdallahalidev/plantvillage-dataset) — CC BY-NC-SA 4.0
 
 The repository contains the trained weights and class list, but not the disease training dataset or its training script. The held-out test set usage cannot be confirmed from this repository.
 
-### Crop Recommendation
+###   
 
 - Dataset: `Backend/model/Crop recommendation dataset.csv`
 - Rows: 57,000
 - Target column: `CROPS`
 - Input columns used: `SOIL`, `SEASON`, `WATER_SOURCE`, `SOIL_PH`, `TEMP`, `RELATIVE_HUMIDITY`, `N`, `P`, and `K`
 - Split: 80% training and 20% test, using stratified sampling with `random_state=42`
-- Dataset source/license: [ADD DATASET SOURCE AND LICENSE]
-
+- Dataset source/license: [Kaggle – Crop Recommendation Dataset](https://www.kaggle.com/datasets/atharvaingle/crop-recommendation-dataset) — [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
+  
 ## 4. Model and Evaluation
 
 | Module | Model | Details | Results |
@@ -128,6 +128,8 @@ The repository contains the trained weights and class list, but not the disease 
 | Crop recommendation | Random Forest | 200 trees, one-hot encoding for soil, season, and water source | Development-test accuracy: 98.51% \| Macro-F1: 98.51% |
 
 These are development-test results, not the official SIH held-out field-test score.
+
+Disease model creation and training process: [Google Colab notebook](https://colab.research.google.com/drive/1-nR4wYrACsRQxC3Nun5PpQG69_-mUUpt?usp=sharing)
 
 ## 5. Architecture
 
