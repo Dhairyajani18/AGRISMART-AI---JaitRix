@@ -88,7 +88,7 @@ Open the URL printed by Vite, normally `http://localhost:3000`.
 
 Set `VITE_API_BASE_URL=http://localhost:8000` in `frontend/.env` if required.
 
-### Make a Disease Prediction
+  ###A. Make a Disease Prediction
 
 The backend accepts a plant image for disease prediction through the `POST /api/predict/` endpoint.
 
@@ -109,7 +109,7 @@ python test_prediction.py "C:\SomePath\Downloads\leaf.jpg"
 
 It returns the predicted class and confidence.
 
-### Make a Crop Recommendation
+  ###B. Make a Crop Recommendation
 
 After running the crop training script, send a request to `POST /api/recommend-crop/`:
 
