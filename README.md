@@ -40,6 +40,12 @@ The interface includes translations for English, Hindi, and Gujarati. The select
 - Python 3
 - Node.js and npm
 
+### Clone Repo
+```bash
+git clone https://github.com/Preyans-alt/AGRISMART-AI---JaitRix.git
+cd AGRISMART-AI---JaitRix
+```
+
 ### Backend
 
 ```bash
@@ -48,9 +54,9 @@ pip install -r requirements.txt
 ```
 
 Create `Backend/.env` if you want to use the weather helper used by the crop form:
-
+use provided Api-Key(for testing purpose)
 ```env
-OPENWEATHER_API_KEY=your_openweather_api_key
+OPENWEATHER_API_KEY= 5445c9fc9b1acd71f582bdac7e6f9b39
 ```
 
 Create the crop recommendation model:
@@ -72,6 +78,7 @@ The API will be available at `http://127.0.0.1:8000`.
 Open a second terminal:
 
 ```bash
+cd AGRISMART-AI---JaitRix (if outside of folder)
 cd frontend
 npm install
 npm run dev
@@ -83,13 +90,24 @@ Set `VITE_API_BASE_URL=http://localhost:8000` in `frontend/.env` if required.
 
 ### Make a Disease Prediction
 
-The backend accepts an image at `POST /api/predict/`:
+The backend accepts a plant image for disease prediction through the `POST /api/predict/` endpoint.
+
+To test the prediction locally:
+
+1. Open a terminal and navigate to the `Backend` folder inside AGRISMART-AI---JaitRix.
+2. Run the prediction script with the path to your image:
 
 ```bash
-curl -X POST http://127.0.0.1:8000/api/predict/ -F "image=@path/to/leaf.jpg"
+python test_prediction.py "path/to/your/image.jpg"
 ```
 
-It returns the predicted class and confidence, plus disease guidance where available.
+**Example:**
+
+```bash
+python test_prediction.py "C:\SomePath\Downloads\leaf.jpg"
+```
+
+It returns the predicted class and confidence.
 
 ### Make a Crop Recommendation
 
