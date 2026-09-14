@@ -28,9 +28,7 @@ export const Navbar: React.FC = () => {
             <div className="flex flex-col">
               <span className="text-lg sm:text-xl font-extrabold tracking-tight text-[#0D3B2A] flex items-center gap-1.5">
                 {t.appName}
-                <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-[10px] font-bold bg-[#E5F6EC] text-[#16834A]">
-                  AI
-                </span>
+                
               </span>
               <span className="text-[11px] text-[#66736B] hidden sm:block leading-none font-medium">
                 {t.tagline}
