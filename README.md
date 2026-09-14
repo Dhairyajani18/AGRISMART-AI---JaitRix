@@ -1,6 +1,6 @@
 # AgriSmart AI
 
-AgriSmart AI is a simple agriculture support project for SIH 2026. It includes crop disease detection, crop recommendation, and a seven-day weather forecast.
+AgriSmart AI is an intelligent agriculture support platform developed for SIH 2026. It combines AI-powered crop disease detection, data-driven crop recommendations, and a seven-day weather forecast to help farmers make more informed decisions.
 
 ## 1. Modules Built
 
