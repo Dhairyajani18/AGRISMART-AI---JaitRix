@@ -61,7 +61,6 @@ export const gu = {
     soilActive: 'જમીન બુદ્ધિમત્તા સક્રિય',
     formTitle: '🌱 ખેતરની પરિસ્થિતિઓ',
     formSubtitle: 'વિગતો દાખલ કરો અથવા પ્રાદેશિક નમૂના માહિતી ભરો',
-    loadSample: 'નમૂના માહિતી ભરો',
     soilType: 'જમીનનો પ્રકાર',
     soilPh: 'જમીનનું પી.એચ. (pH)',
     soilPhHint: 'આદર્શ સ્તર: 5.5 થી 7.5',

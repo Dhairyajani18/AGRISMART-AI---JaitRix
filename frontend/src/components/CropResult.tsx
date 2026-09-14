@@ -118,7 +118,7 @@ export const CropResult: React.FC<CropResultProps> = ({ result, onPredictAgain }
                       <h4 className="text-xl font-bold text-[#17211B]">{alt.name}</h4>
                     </div>
                     <span className="px-3 py-1 rounded-full text-xs font-black font-mono bg-[#E5F6EC] text-[#16834A] border border-[#16834A]/20">
-                      {alt.suitability}% {t.cropResult.suitability}
+                      {alt.suitability.toFixed(2)}% {t.cropResult.suitability}
                     </span>
                   </div>
 

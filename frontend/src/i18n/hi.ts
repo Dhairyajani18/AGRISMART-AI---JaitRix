@@ -61,7 +61,6 @@ export const hi = {
     soilActive: 'मृदा बुद्धिमत्ता सक्रिय',
     formTitle: '🌱 खेत की स्थितियां',
     formSubtitle: 'पैरामीटर दर्ज करें या क्षेत्रीय नमूना डेटा चुनें',
-    loadSample: 'नमूना डेटा भरें',
     soilType: 'मिट्टी का प्रकार',
     soilPh: 'मिट्टी का पीएच (pH)',
     soilPhHint: 'आदर्श मान: 5.5 से 7.5',

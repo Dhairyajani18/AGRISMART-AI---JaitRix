@@ -8,26 +8,26 @@ interface DiseaseUploaderProps {
   isAnalyzing: boolean;
 }
 
-// Built-in SVG base64 or generated sample leaves for immediate hackathon demos
+// Public image examples; selecting one still sends the real image to the backend.
 const SAMPLE_LEAVES = [
   {
     id: 'sample-early-blight',
-    name: 'Tomato Early Blight',
-    cropType: 'Tomato (ટામેટા / टमाटर)',
+    name: 'Powdery Mildew',
+    // cropType: 'Tomato (ટામેટા / टमाटर)',
     growthStage: 'Vegetative foliage growth',
     url: 'test_image_1.jpg',
   },
   {
-    id: 'sample-healthy',
-    name: 'Healthy Leaf Specimen',
-    cropType: 'Tomato (ટામેટા / टमाटर)',
+    id: 'sample-late',
+    name: 'Tomato Late Blight',
+    // cropType: 'Tomato (ટામેટા / टमाटर)',
     growthStage: 'Flowering / Blossom stage',
     url: 'test_image_2.jpg',
   },
   {
     id: 'sample-potato-blight',
-    name: 'Potato Late Blight',
-    cropType: 'Potato (બટાટા / आलू)',
+    name: 'Black Measles',
+    // cropType: 'Potato (બટાટા / आलू)',
     growthStage: 'Fruiting / Pod development',
     url: 'test_image_3.jpg',
   },
@@ -115,17 +115,16 @@ export const DiseaseUploader: React.FC<DiseaseUploaderProps> = ({ onAnalyze, isA
       setGrowthStage(sample.growthStage);
       setPreviewUrl(sample.url);
 
-      // Create a dummy File instance representing this sample for formData transmission
       const response = await fetch(sample.url);
+      if (!response.ok) throw new Error('Unable to load sample image');
       const blob = await response.blob();
       const sampleFile = new File([blob], `${sample.id}.jpg`, { type: 'image/jpeg' });
       setSelectedFile(sampleFile);
       setValidationError(null);
-    } catch {
-      // Fallback
-      setPreviewUrl(sample.url);
-      const mockFile = new File(['sample-bytes'], `${sample.id}.jpg`, { type: 'image/jpeg' });
-      setSelectedFile(mockFile);
+    } catch (error) {
+      setPreviewUrl(null);
+      setSelectedFile(null);
+      setValidationError('Unable to load this sample image. Please upload an image from your device.');
     }
   };
 

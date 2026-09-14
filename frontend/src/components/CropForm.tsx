@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, ArrowRight, ArrowLeft, Loader2, Search, MapPin } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Loader2, Search, MapPin } from 'lucide-react';
 import { CropInput } from '../types/crop';
 import { useLanguage } from '../context/LanguageContext';
 import { fetchWeatherByLocation, searchCity } from '../services/weatherApi';
@@ -40,22 +40,6 @@ export const CropForm: React.FC<CropFormProps> = ({ onSubmit, isLoading }) => {
       ...prev,
       [field]: typeof prev[field] === 'number' ? Number(value) : value,
     }));
-  };
-
-  const handleSampleFill = () => {
-    setFormData({
-      soilType: 'Black Cotton Soil',
-      soilPh: 6.8,
-      temperature: 28,
-      humidity: 70,
-      rainfall: 650,
-      waterAvailability: 'Moderate (Borewell / Drip irrigation)',
-      season: 'Kharif (Monsoon / June - Oct)',
-      previousCrop: 'Wheat',
-      nitrogen: 50,
-      phosphorus: 40,
-      potassium: 42,
-    });
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -140,14 +124,6 @@ export const CropForm: React.FC<CropFormProps> = ({ onSubmit, isLoading }) => {
           </p>
         </div>
 
-        <button
-          type="button"
-          onClick={handleSampleFill}
-          className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold bg-[#E5F6EC] text-[#0D3B2A] hover:bg-[#16834A] hover:text-white transition-all self-start sm:self-auto cursor-pointer shadow-sm"
-        >
-          <Sparkles className="w-3.5 h-3.5 text-[#16834A]" />
-          <span>{t.cropForm.loadSample}</span>
-        </button>
       </div>
 
       {/* Mobile Step Indicator Tabs (<sm screens) */}

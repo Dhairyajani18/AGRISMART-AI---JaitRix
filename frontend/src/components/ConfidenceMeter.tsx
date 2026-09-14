@@ -37,7 +37,7 @@ export const ConfidenceMeter: React.FC<ConfidenceMeterProps> = ({
         <div className="flex justify-between items-center text-sm font-semibold">
           <span className="text-[#17211B]">{label || 'Confidence Level'}</span>
           <span style={{ color }} className="font-mono font-bold text-base">
-            {normalizedValue}%
+            {normalizedValue.toFixed(2)}%
           </span>
         </div>
         <div className="w-full h-3 bg-[#E2E8F0] rounded-full overflow-hidden p-0.5">

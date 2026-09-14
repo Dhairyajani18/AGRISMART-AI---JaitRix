@@ -61,7 +61,6 @@ export const en = {
     soilActive: 'Soil Intelligence Active',
     formTitle: 'Farm Conditions',
     formSubtitle: 'Enter farm parameters or load regional sample values',
-    loadSample: 'Fill Sample Farm Data',
     soilType: 'Soil Type',
     soilPh: 'Soil pH',
     soilPhHint: 'Ideal range: 5.5 to 7.5',
@@ -222,8 +221,6 @@ export const en = {
     invalidImage: 'Please upload a valid image file (JPG, PNG, WEBP).',
     imageTooLarge: 'The selected image exceeds 10MB. Please upload a smaller photo.',
     networkError: 'Unable to connect to the prediction server. Please check your internet or try again.',
-    backendUnavailable:
-      'Agricultural prediction service is temporarily unavailable. Connecting via fallback diagnostic model.',
     predictionFailed:
       'Something went wrong while analyzing your crop. Please try again with clear lighting.',
     tryAgain: 'Try Again',

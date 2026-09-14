@@ -279,7 +279,7 @@ export const DiseaseResult: React.FC<DiseaseResultProps> = ({
                     {t.diseaseResult.confidence}
                   </span>
                   <span className="text-sm font-extrabold text-[#16834A] font-mono">
-                    {confidence}%
+                    {confidence.toFixed(2)}%
                   </span>
                 </div>
               </div>

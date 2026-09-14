@@ -13,8 +13,8 @@ export const API_BASE_URL: string =
  * Configurable Backend Endpoint Placeholders.
  * Modify these constants to match the exact routes exposed by your Python FastAPI / Flask backend.
  */
-export const CROP_PREDICTION_ENDPOINT = '/predict/crop';
-export const DISEASE_PREDICTION_ENDPOINT = '/predict/disease';
+export const CROP_PREDICTION_ENDPOINT = '/api/recommend-crop/';
+export const DISEASE_PREDICTION_ENDPOINT = '/api/predict/';
 
 export interface ApiErrorResponse {
   message: string;
