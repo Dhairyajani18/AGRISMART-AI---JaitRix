@@ -15,21 +15,21 @@ const SAMPLE_LEAVES = [
     name: 'Tomato Early Blight',
     cropType: 'Tomato (ટામેટા / टमाटर)',
     growthStage: 'Vegetative foliage growth',
-    url: 'https://images.unsplash.com/photo-1592417817098-8f3d6ef23a4a?auto=format&fit=crop&w=600&q=80',
+    url: 'test_image_1.jpg',
   },
   {
     id: 'sample-healthy',
     name: 'Healthy Leaf Specimen',
     cropType: 'Tomato (ટામેટા / टमाटर)',
     growthStage: 'Flowering / Blossom stage',
-    url: 'https://images.unsplash.com/photo-1591857177580-dc82b9ac4e17?auto=format&fit=crop&w=600&q=80',
+    url: 'test_image_2.jpg',
   },
   {
     id: 'sample-potato-blight',
     name: 'Potato Late Blight',
     cropType: 'Potato (બટાટા / आलू)',
     growthStage: 'Fruiting / Pod development',
-    url: 'https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&fit=crop&w=600&q=80',
+    url: 'test_image_3.jpg',
   },
 ];
 
@@ -307,129 +307,7 @@ export const DiseaseUploader: React.FC<DiseaseUploaderProps> = ({ onAnalyze, isA
           </div>
         </div>
 
-        {/* Crop Metadata Selectors */}
-        <div className="pt-6 border-t border-[#F1F5F9]">
-          <h4 className="text-sm font-bold text-[#17211B] mb-4 uppercase tracking-wide">
-            Farm Information
-          </h4>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            <div className="space-y-2">
-              <label
-                htmlFor="disease-crop-type"
-                className="block text-xs font-bold uppercase tracking-wider text-[#17211B]"
-              >
-                {t.disease.cropType}
-              </label>
-              <select
-                id="disease-crop-type"
-                value={cropType}
-                onChange={(e) => setCropType(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F7FAF8] text-[#17211B] text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#16834A]/20 focus:border-[#16834A] transition-all"
-              >
-                <option value="Tomato (ટામેટા / टमाटर)">{t.disease.cropTypeOptions.tomato}</option>
-                <option value="Potato (બટાટા / आलू)">{t.disease.cropTypeOptions.potato}</option>
-                <option value="Cotton (કપાસ / कपास)">{t.disease.cropTypeOptions.cotton}</option>
-                <option value="Rice / Paddy (ડાંગર / धान)">{t.disease.cropTypeOptions.rice}</option>
-                <option value="Wheat (ઘઉં / गेहूं)">{t.disease.cropTypeOptions.wheat}</option>
-                <option value="Corn / Maize (મકાઈ / मक्का)">{t.disease.cropTypeOptions.maize}</option>
-                <option value="Chilli (મરચાં / मिर्च)">{t.disease.cropTypeOptions.chilli}</option>
-              </select>
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="disease-crop-variety" className="block text-xs font-bold uppercase tracking-wider text-[#17211B]">
-                {t.disease.cropVariety}
-              </label>
-              <input
-                id="disease-crop-variety"
-                type="text"
-                placeholder="e.g. Roma"
-                value={cropVariety}
-                onChange={(e) => setCropVariety(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F7FAF8] text-[#17211B] text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#16834A]/20 focus:border-[#16834A] transition-all"
-              />
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="disease-growth-stage" className="block text-xs font-bold uppercase tracking-wider text-[#17211B]">
-                {t.disease.growthStage}
-              </label>
-              <select
-                id="disease-growth-stage"
-                value={growthStage}
-                onChange={(e) => setGrowthStage(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F7FAF8] text-[#17211B] text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#16834A]/20 focus:border-[#16834A] transition-all"
-              >
-                <option value="Seedling / Early vegetative">{t.disease.growthStageOptions.seedling}</option>
-                <option value="Vegetative foliage growth">{t.disease.growthStageOptions.vegetative}</option>
-                <option value="Flowering / Blossom stage">{t.disease.growthStageOptions.flowering}</option>
-                <option value="Fruiting / Pod development">{t.disease.growthStageOptions.fruiting}</option>
-                <option value="Maturity / Pre-harvest">{t.disease.growthStageOptions.mature}</option>
-              </select>
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="disease-farm-type" className="block text-xs font-bold uppercase tracking-wider text-[#17211B]">
-                {t.disease.farmType}
-              </label>
-              <select
-                id="disease-farm-type"
-                value={farmType}
-                onChange={(e) => setFarmType(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F7FAF8] text-[#17211B] text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#16834A]/20 focus:border-[#16834A] transition-all"
-              >
-                <option value="Open Field">Open Field</option>
-                <option value="Greenhouse">Greenhouse</option>
-                <option value="Polyhouse">Polyhouse</option>
-              </select>
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="disease-water-source" className="block text-xs font-bold uppercase tracking-wider text-[#17211B]">
-                {t.disease.waterSource}
-              </label>
-              <select
-                id="disease-water-source"
-                value={waterSource}
-                onChange={(e) => setWaterSource(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F7FAF8] text-[#17211B] text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#16834A]/20 focus:border-[#16834A] transition-all"
-              >
-                <option value="Irrigated">Irrigated</option>
-                <option value="Rainfed">Rainfed</option>
-              </select>
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="disease-season" className="block text-xs font-bold uppercase tracking-wider text-[#17211B]">
-                {t.disease.season}
-              </label>
-              <select
-                id="disease-season"
-                value={season}
-                onChange={(e) => setSeason(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F7FAF8] text-[#17211B] text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#16834A]/20 focus:border-[#16834A] transition-all"
-              >
-                <option value="Kharif">Kharif</option>
-                <option value="Rabi">Rabi</option>
-                <option value="Zaid">Zaid</option>
-              </select>
-            </div>
-            
-            <div className="space-y-2">
-              <label htmlFor="disease-planting-date" className="block text-xs font-bold uppercase tracking-wider text-[#17211B]">
-                {t.disease.plantingDate}
-              </label>
-              <input
-                id="disease-planting-date"
-                type="date"
-                value={plantingDate}
-                onChange={(e) => setPlantingDate(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-[#E2E8F0] bg-[#F7FAF8] text-[#17211B] text-sm font-medium focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#16834A]/20 focus:border-[#16834A] transition-all"
-              />
-            </div>
-          </div>
-        </div>
-
+        
         {/* Primary Analyze Button */}
         <div className="pt-4 border-t border-[#F1F5F9]">
           <button
