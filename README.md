@@ -57,7 +57,8 @@ pip install -r requirements.txt
 
 Create `Backend/.env` if you want to use the weather helper used by the crop form:
 ```env
-OPENWEATHER_API_KEY=your_openweather_api_key
+OPENWEATHER_API_KEY= 5445c9fc9b1acd71f582bdac7e6f9b39
+(use above Api Key for testing purpose)
 ```
 
 Create the crop recommendation model:
