@@ -177,9 +177,9 @@ export const en = {
     removeImage: 'Remove',
     specimenReady: 'Specimen Ready',
     sampleLeavesTitle: 'Try with sample leaf images:',
-    sampleLeaf1: 'Tomato Early Blight',
+    sampleLeaf1: 'Cherry Powdery mildew',
     sampleLeaf2: 'Healthy Tomato Leaf',
-    sampleLeaf3: 'Potato Late Blight',
+    sampleLeaf3: 'Grape Esca',
     cropTypeOptions: {
       tomato: 'Tomato (ટામેટા / टमाटर)',
       potato: 'Potato (બટાટા / आलू)',
