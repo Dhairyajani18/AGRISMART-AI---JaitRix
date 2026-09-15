@@ -11,7 +11,7 @@ export const en = {
     profile: 'Farmer Profile',
   },
   hero: {
-    badge: '✦ AI-POWERED AGRICULTURE',
+    badge: ' AI-POWERED AGRICULTURE',
     headline: 'Smarter Farming Starts With AI.',
     subtext:
       'Predict the right crop for your farm and detect crop diseases early with intelligent AI-powered analysis.',
