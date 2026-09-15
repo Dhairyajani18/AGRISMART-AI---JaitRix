@@ -73,7 +73,7 @@ export const hi = {
     nitrogen: 'नाइट्रोजन (N)',
     phosphorus: 'फॉस्फोरस (P)',
     potassium: 'पोटेशियम (K)',
-    submitBtn: '🌱 सर्वोत्तम फसल का सुझाव पाएं →',
+    submitBtn: 'सर्वोत्तम फसल का सुझाव पाएं →',
     stepSoil: 'मिट्टी',
     stepClimate: 'मौसम',
     fetchWeather: 'मेरे स्थान से ऑटो-फ़िल करें',
@@ -234,6 +234,7 @@ export const hi = {
     taglineBottom: 'Created by Jaitrix',
   },
   weatherPage: {
+    changeLocation: 'स्थान बदलें',
     agriculturalInsights: 'कृषि मौसम अंतर्दृष्टि', rainfallRisk: 'वर्षा जोखिम', heatRisk: 'गर्मी जोखिम', humidityRisk: 'आर्द्रता जोखिम', farmActivity: 'खेत की गतिविधि', irrigationGuidance: 'सिंचाई मार्गदर्शन',
     insightLow: 'कम', insightModerate: 'मध्यम', insightHigh: 'अधिक', insightFavorable: 'अनुकूल', insightCaution: 'सावधानी', insightUnfavorable: 'प्रतिकूल', insightReduce: 'कम करें', insightNormal: 'सामान्य', insightMonitor: 'निगरानी रखें',
     rainfallMessage: 'पूर्वानुमान में कुल {total} मिमी बारिश संभावित है।', heatMessage: 'पूर्वानुमान में तापमान {temperature}°C तक पहुंच सकता है।', humidityMessage: 'पूर्वानुमान में औसत आर्द्रता {humidity}% है।',

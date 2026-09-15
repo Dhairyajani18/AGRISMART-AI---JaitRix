@@ -73,7 +73,7 @@ export const gu = {
     nitrogen: 'નાઇટ્રોજન (N)',
     phosphorus: 'ફોસ્ફરસ (P)',
     potassium: 'પોટેશિયમ (K)',
-    submitBtn: '🌱 શ્રેષ્ઠ પાકની આગાહી મેળવો →',
+    submitBtn: 'શ્રેષ્ઠ પાકની આગાહી મેળવો →',
     stepSoil: 'જમીન',
     stepClimate: 'હવામાન',
     fetchWeather: 'મારા સ્થાનથી ઓટો-ફિલ કરો',
@@ -234,6 +234,7 @@ export const gu = {
     taglineBottom: 'Created by Jaitrix',
   },
   weatherPage: {
+    changeLocation: 'સ્થાન બદલો',
     agriculturalInsights: 'કૃષિ હવામાન અંતર્દૃષ્ટિ', rainfallRisk: 'વરસાદનું જોખમ', heatRisk: 'ગરમીનું જોખમ', humidityRisk: 'ભેજનું જોખમ', farmActivity: 'ખેતર પ્રવૃત્તિ', irrigationGuidance: 'સિંચાઈ માર્ગદર્શન',
     insightLow: 'ઓછું', insightModerate: 'મધ્યમ', insightHigh: 'ઊંચું', insightFavorable: 'અનુકૂળ', insightCaution: 'સાવચેતી', insightUnfavorable: 'પ્રતિકૂળ', insightReduce: 'ઘટાડો', insightNormal: 'સામાન્ય', insightMonitor: 'નજર રાખો',
     rainfallMessage: 'આગાહીમાં કુલ {total} મિમી વરસાદની સંભાવના છે.', heatMessage: 'આગાહીમાં તાપમાન {temperature}°C સુધી પહોંચી શકે છે.', humidityMessage: 'આગાહીમાં સરેરાશ ભેજ {humidity}% છે.',

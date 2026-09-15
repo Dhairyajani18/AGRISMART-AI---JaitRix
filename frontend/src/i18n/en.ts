@@ -234,6 +234,7 @@ export const en = {
     taglineBottom: 'Created by Jaitrix',
   },
   weatherPage: {
+    changeLocation: 'Change location',
     title: 'Farm Weather Forecast',
     subtitle: 'Real-time meteorological data and 7-day outlook for agricultural planning.',
     getLocation: 'Get My Location Weather',

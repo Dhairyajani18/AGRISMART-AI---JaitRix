@@ -94,14 +94,6 @@ export const Navbar: React.FC = () => {
               <Sparkles className="w-3.5 h-3.5 text-[#16834A]" />
               <span>Smart Agro v1.0</span>
             </div>
-
-            {/* Farmer avatar */}
-            <div
-              className="w-9 h-9 rounded-full bg-[#E5F6EC] border-2 border-white shadow-xs flex items-center justify-center text-[#16834A] font-bold text-sm"
-              title="Kisan AI Assistant"
-            >
-              👨‍🌾
-            </div>
           </div>
         </div>
 
