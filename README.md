@@ -145,7 +145,7 @@ The repository contains the trained weights and class list, but not the disease 
 | Crop recommendation | Random Forest | 200 trees, one-hot encoding for soil, season, and water source | Development-test accuracy: 98.51% \| Macro-F1: 98.51% |
 
 
-Disease model creation and training process: [Google Colab notebook](https://colab.research.google.com/drive/1-nR4wYrACsRQxC3Nun5PpQG69_-mUUpt?usp=sharing)
+Disease model creation and training process: [Google Colab notebook](https://colab.research.google.com/drive/1WqBLSFT44HKN8Ui6zH3Ft02SnOAYEJ9D?usp=sharing)
 
 ## 5. Architecture
 
