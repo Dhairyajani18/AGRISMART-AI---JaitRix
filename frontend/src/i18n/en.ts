@@ -249,6 +249,12 @@ export const en = {
     high: 'High',
     low: 'Low',
     cityNotFound: 'City not found. Please check spelling or try another location.',
+    agriculturalInsights: 'Agricultural Weather Insights', rainfallRisk: 'Rainfall Risk', heatRisk: 'Heat Risk', humidityRisk: 'Humidity Risk', farmActivity: 'Farm Activity', irrigationGuidance: 'Irrigation Guidance',
+    insightLow: 'Low', insightModerate: 'Moderate', insightHigh: 'High', insightFavorable: 'Favorable', insightCaution: 'Caution', insightUnfavorable: 'Unfavorable', insightReduce: 'Reduce', insightNormal: 'Normal', insightMonitor: 'Monitor',
+    rainfallMessage: '{total} mm of rain is expected across the forecast.', heatMessage: 'Temperatures may reach {temperature}°C during the forecast.', humidityMessage: 'Average forecast humidity is {humidity}%.',
+    farmFavorable: 'Forecast conditions are generally suitable for outdoor farm activities.', farmCaution: 'Forecast conditions may affect outdoor farm activities.', farmUnfavorable: 'Severe forecast conditions may disrupt outdoor farm activities.',
+    irrigationReduce: 'Expected rainfall may allow reduced irrigation.', irrigationNormal: 'No major rainfall or heat signal is expected; follow normal practice.', irrigationMonitor: 'Low rainfall and elevated heat mean irrigation should be monitored.',
+    insightNotice: 'Forecast-based decision support, not a crop-specific irrigation schedule.',
   },
   heroOverlay: {
     aiVisionBadge: 'AI AGRI VISION 2.0',

@@ -234,6 +234,11 @@ export const gu = {
     taglineBottom: 'Created by Jaitrix',
   },
   weatherPage: {
+    agriculturalInsights: 'કૃષિ હવામાન અંતર્દૃષ્ટિ', rainfallRisk: 'વરસાદનું જોખમ', heatRisk: 'ગરમીનું જોખમ', humidityRisk: 'ભેજનું જોખમ', farmActivity: 'ખેતર પ્રવૃત્તિ', irrigationGuidance: 'સિંચાઈ માર્ગદર્શન',
+    insightLow: 'ઓછું', insightModerate: 'મધ્યમ', insightHigh: 'ઊંચું', insightFavorable: 'અનુકૂળ', insightCaution: 'સાવચેતી', insightUnfavorable: 'પ્રતિકૂળ', insightReduce: 'ઘટાડો', insightNormal: 'સામાન્ય', insightMonitor: 'નજર રાખો',
+    rainfallMessage: 'આગાહીમાં કુલ {total} મિમી વરસાદની સંભાવના છે.', heatMessage: 'આગાહીમાં તાપમાન {temperature}°C સુધી પહોંચી શકે છે.', humidityMessage: 'આગાહીમાં સરેરાશ ભેજ {humidity}% છે.',
+    farmFavorable: 'આગાહીની સ્થિતિઓ બહારના ખેતર કામ માટે સામાન્ય રીતે અનુકૂળ છે.', farmCaution: 'આગાહીની સ્થિતિઓ બહારના ખેતર કામને અસર કરી શકે છે.', farmUnfavorable: 'તીવ્ર હવામાન બહારના ખેતર કામમાં વિઘ્ન ઊભું કરી શકે છે.',
+    irrigationReduce: 'અપેક્ષિત વરસાદથી સિંચાઈ ઘટાડીને શકાય છે.', irrigationNormal: 'મોટા વરસાદ અથવા ગરમીનો મહત્વનો સંકેત નથી; સામાન્ય પદ્ધતિ અનુસરો.', irrigationMonitor: 'ઓછા વરસાદ અને વધેલી ગરમીમાં સિંચાઈની દેખરેખ રાખો.', insightNotice: 'આગાહી-આધારિત નિર્ણય સહાય; પાક-વિશેષ સિંચાઈ અનુસૂચિ નથી.',
     title: 'ખેતરનું હવામાન આગાહી',
     subtitle: 'કૃષિ આયોજન માટે રીઅલ-ટાઇમ હવામાન ડેટા અને 7-દિવસની આગાહી.',
     getLocation: 'મારા સ્થાનનું હવામાન મેળવો',

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { fetchWeatherByLocation, searchCity, WeatherForecast } from '../services/weatherApi';
+import { calculateAgriculturalInsights } from '../services/weatherInsights';
 import { MapPin, ThermometerSun, Droplets, CloudRain, Loader2, Calendar, Search } from 'lucide-react';
 
 export const WeatherPrediction: React.FC = () => {
@@ -10,6 +11,9 @@ export const WeatherPrediction: React.FC = () => {
   const [forecast, setForecast] = useState<WeatherForecast | null>(null);
   const [cityQuery, setCityQuery] = useState('');
   const [isSearchingCity, setIsSearchingCity] = useState(false);
+  const insights = forecast ? calculateAgriculturalInsights(forecast) : null;
+
+  const insightLabel = (level: string) => t.weatherPage?.[`insight${level[0].toUpperCase()}${level.slice(1)}` as 'insightLow'] || level;
 
   const handleSearchCity = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -210,6 +214,31 @@ export const WeatherPrediction: React.FC = () => {
               })}
             </div>
           </div>
+
+          {insights && (
+            <div className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-[#E2E8F0]">
+              <h2 className="text-lg font-bold text-[#17211B] mb-2 flex items-center gap-2">
+                <Droplets className="w-5 h-5 text-[#16834A]" />
+                {t.weatherPage?.agriculturalInsights || 'Agricultural Weather Insights'}
+              </h2>
+              <p className="text-sm text-[#527763] mb-6">{t.weatherPage?.insightNotice || 'Forecast-based decision support, not a crop-specific irrigation schedule.'}</p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {[
+                  [t.weatherPage?.rainfallRisk || 'Rainfall Risk', insightLabel(insights.rainfall.level), (t.weatherPage?.rainfallMessage || '{total} mm of rain is expected across the forecast.').replace('{total}', insights.rainfall.total.toFixed(1))],
+                  [t.weatherPage?.heatRisk || 'Heat Risk', insightLabel(insights.heat.level), (t.weatherPage?.heatMessage || 'Temperatures may reach {temperature}°C during the forecast.').replace('{temperature}', insights.heat.maximum.toFixed(1))],
+                  ...(insights.humidity ? [[t.weatherPage?.humidityRisk || 'Humidity Risk', insightLabel(insights.humidity.level), (t.weatherPage?.humidityMessage || 'Average forecast humidity is {humidity}%.').replace('{humidity}', insights.humidity.average.toFixed(0))]] : []),
+                  [t.weatherPage?.farmActivity || 'Farm Activity', insightLabel(insights.farmActivity.level), t.weatherPage?.[`farm${insights.farmActivity.level[0].toUpperCase()}${insights.farmActivity.level.slice(1)}` as 'farmFavorable'] || 'Conditions are based on the full forecast.'],
+                  [t.weatherPage?.irrigationGuidance || 'Irrigation Guidance', insightLabel(insights.irrigation.level), t.weatherPage?.[`irrigation${insights.irrigation.level[0].toUpperCase()}${insights.irrigation.level.slice(1)}` as 'irrigationReduce'] || 'Use this as a forecast-based indicator.'],
+                ].map(([title, level, message]) => (
+                  <div key={String(title)} className="rounded-2xl border border-[#E2E8F0] bg-[#F7FAF8] p-4">
+                    <div className="text-sm font-bold uppercase tracking-wider text-[#3A5746]">{title}</div>
+                    <div className="mt-1 text-xl font-extrabold text-[#0D3B2A]">{level}</div>
+                    <p className="mt-1 text-sm text-[#527763]">{message}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
