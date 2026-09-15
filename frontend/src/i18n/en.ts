@@ -129,6 +129,8 @@ export const en = {
   cropResult: {
     matchHeading: 'Your Best Crop Match',
     suitability: 'Suitability',
+    defaultSummary: 'Best fit for your farm conditions.',
+    reasonDefault: 'Recommended for your farm conditions.',
     whyTitle: 'Why this Crop?',
     otherHeading: 'Other Suitable Crops',
     viewDetails: 'View Crop Details',
@@ -234,6 +236,7 @@ export const en = {
     taglineBottom: 'Created by Jaitrix',
   },
   weatherPage: {
+    back: 'Back',
     changeLocation: 'Change location',
     title: 'Farm Weather Forecast',
     subtitle: 'Real-time meteorological data and 7-day outlook for agricultural planning.',

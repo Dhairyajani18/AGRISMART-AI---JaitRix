@@ -129,6 +129,8 @@ export const gu = {
   cropResult: {
     matchHeading: 'તમારા માટે સૌથી યોગ્ય પાક',
     suitability: 'અનુકૂળતા દર',
+    defaultSummary: 'તમારી જમીન અને પરિસ્થિતિના આધારે આ પાક સૌથી વધુ યોગ્ય છે.',
+    reasonDefault: 'તમારી જમીન અને પરિસ્થિતિના આધારે આ પાક ભલામણ કરવામાં આવ્યો છે.',
     whyTitle: 'આ પાક કેમ યોગ્ય છે?',
     otherHeading: 'અન્ય યોગ્ય પાક વિકલ્પો',
     viewDetails: 'વિગતવાર સલાહ જુઓ',
@@ -200,7 +202,7 @@ export const gu = {
     badgeScanning: 'સ્કેનિંગ ચાલુ છે',
   },
   diseaseResult: {
-    statusDetected: '⚠ રોગ જોવા મળ્યો છે',
+    statusDetected: 'રોગ જોવા મળ્યો છે',
     statusHealthy: 'પાક એકદમ તંદુરસ્ત જણાય છે',
     statusLowConfidence: 'સચોટ ઓળખ થઈ શકી નથી',
     confidence: 'વિશ્વાસપાત્રતા દર',
@@ -234,6 +236,7 @@ export const gu = {
     taglineBottom: 'Created by Jaitrix',
   },
   weatherPage: {
+    back: 'પાછા',
     changeLocation: 'સ્થાન બદલો',
     agriculturalInsights: 'કૃષિ હવામાન અંતર્દૃષ્ટિ', rainfallRisk: 'વરસાદનું જોખમ', heatRisk: 'ગરમીનું જોખમ', humidityRisk: 'ભેજનું જોખમ', farmActivity: 'ખેતર પ્રવૃત્તિ', irrigationGuidance: 'સિંચાઈ માર્ગદર્શન',
     insightLow: 'ઓછું', insightModerate: 'મધ્યમ', insightHigh: 'ઊંચું', insightFavorable: 'અનુકૂળ', insightCaution: 'સાવચેતી', insightUnfavorable: 'પ્રતિકૂળ', insightReduce: 'ઘટાડો', insightNormal: 'સામાન્ય', insightMonitor: 'નજર રાખો',

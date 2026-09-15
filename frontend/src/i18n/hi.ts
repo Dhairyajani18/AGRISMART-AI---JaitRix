@@ -129,6 +129,8 @@ export const hi = {
   cropResult: {
     matchHeading: 'आपके लिए सबसे उपयुक्त फसल',
     suitability: 'अनुकूलता',
+    defaultSummary: 'आपके खेत की स्थिति के अनुसार यह फसल सबसे उपयुक्त है।',
+    reasonDefault: 'आपके खेत की स्थितियों के आधार पर यह फसल अनुशंसित है।',
     whyTitle: 'यह फसल क्यों उपयुक्त है?',
     otherHeading: 'अन्य उपयुक्त फसलें',
     viewDetails: 'विस्तृत जानकारी देखें',
@@ -200,7 +202,7 @@ export const hi = {
     badgeScanning: 'स्कैनिंग सक्रिय',
   },
   diseaseResult: {
-    statusDetected: '⚠ रोग पाया गया',
+    statusDetected: 'रोग पाया गया',
     statusHealthy: '🌿 फसल स्वस्थ दिखाई दे रही है',
     statusLowConfidence: 'सटीक पहचान नहीं हो सकी',
     confidence: 'सटीकता (विश्वास स्तर)',
@@ -234,6 +236,7 @@ export const hi = {
     taglineBottom: 'Created by Jaitrix',
   },
   weatherPage: {
+    back: 'पीछे',
     changeLocation: 'स्थान बदलें',
     agriculturalInsights: 'कृषि मौसम अंतर्दृष्टि', rainfallRisk: 'वर्षा जोखिम', heatRisk: 'गर्मी जोखिम', humidityRisk: 'आर्द्रता जोखिम', farmActivity: 'खेत की गतिविधि', irrigationGuidance: 'सिंचाई मार्गदर्शन',
     insightLow: 'कम', insightModerate: 'मध्यम', insightHigh: 'अधिक', insightFavorable: 'अनुकूल', insightCaution: 'सावधानी', insightUnfavorable: 'प्रतिकूल', insightReduce: 'कम करें', insightNormal: 'सामान्य', insightMonitor: 'निगरानी रखें',

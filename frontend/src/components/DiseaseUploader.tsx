@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { UploadCloud, Camera, Image as ImageIcon, Trash2, RefreshCw, AlertCircle, Sparkles } from 'lucide-react';
 import { DiseaseInputPayload } from '../types/disease';
 import { useLanguage } from '../context/LanguageContext';
@@ -12,34 +12,34 @@ interface DiseaseUploaderProps {
 const SAMPLE_LEAVES = [
   {
     id: 'sample-early-blight',
-    name: 'Tomato Early Blight',
-    cropType: 'Tomato (ટામેટા / टमाटर)',
-    growthStage: 'Vegetative foliage growth',
+    nameKey: 'sampleLeaf1',
+    cropTypeKey: 'tomato',
+    growthStageKey: 'vegetative',
     url: 'test_image_1.jpg',
   },
   {
     id: 'sample-late',
-    name: 'Tomato Healthy Leaf',
-    cropType: 'Tomato (ટામેટા / टमाटर)',
-    growthStage: 'Flowering / Blossom stage',
+    nameKey: 'sampleLeaf2',
+    cropTypeKey: 'tomato',
+    growthStageKey: 'flowering',
     url: 'test_image_2.jpg',
   },
   {
     id: 'sample-potato-blight',
-    name: 'Potato Late Blight',
-    cropType: 'Potato (બટાટા / आलू)',
-    growthStage: 'Fruiting / Pod development',
+    nameKey: 'sampleLeaf3',
+    cropTypeKey: 'potato',
+    growthStageKey: 'fruiting',
     url: 'test_image_3.jpg',
   },
-];
+] as const;
 
 export const DiseaseUploader: React.FC<DiseaseUploaderProps> = ({ onAnalyze, isAnalyzing }) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const [cropType, setCropType] = useState<string>('Tomato (ટામેટા / टमाटर)');
-  const [growthStage, setGrowthStage] = useState<string>('Vegetative foliage growth');
+  const [cropType, setCropType] = useState<string>(t.disease.cropTypeOptions.tomato);
+  const [growthStage, setGrowthStage] = useState<string>(t.disease.growthStageOptions.vegetative);
   const [farmType, setFarmType] = useState<string>('Open Field');
   const [cropVariety, setCropVariety] = useState<string>('');
   const [waterSource, setWaterSource] = useState<string>('Irrigated');
@@ -51,6 +51,23 @@ export const DiseaseUploader: React.FC<DiseaseUploaderProps> = ({ onAnalyze, isA
 
   const fileInputRef = useRef<HTMLInputElement>(null);
   const cameraInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    setCropType(t.disease.cropTypeOptions.tomato);
+    setGrowthStage(t.disease.growthStageOptions.vegetative);
+  }, [language, t]);
+
+  const localizedSampleLeaves = SAMPLE_LEAVES.map((sample) => ({
+    ...sample,
+    name:
+      sample.nameKey === 'sampleLeaf1'
+        ? t.disease.sampleLeaf1
+        : sample.nameKey === 'sampleLeaf2'
+          ? t.disease.sampleLeaf2
+          : t.disease.sampleLeaf3,
+    cropType: t.disease.cropTypeOptions[sample.cropTypeKey],
+    growthStage: t.disease.growthStageOptions[sample.growthStageKey],
+  }));
 
   const validateAndSetFile = (file: File) => {
     setValidationError(null);
@@ -109,7 +126,7 @@ export const DiseaseUploader: React.FC<DiseaseUploaderProps> = ({ onAnalyze, isA
     if (cameraInputRef.current) cameraInputRef.current.value = '';
   };
 
-  const handleSelectSample = async (sample: (typeof SAMPLE_LEAVES)[0]) => {
+  const handleSelectSample = async (sample: (typeof localizedSampleLeaves)[number]) => {
     try {
       setCropType(sample.cropType);
       setGrowthStage(sample.growthStage);
@@ -288,7 +305,7 @@ export const DiseaseUploader: React.FC<DiseaseUploaderProps> = ({ onAnalyze, isA
             <span>{t.disease.sampleLeavesTitle}</span>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-            {SAMPLE_LEAVES.map((sample) => (
+            {localizedSampleLeaves.map((sample) => (
               <button
                 key={sample.id}
                 type="button"

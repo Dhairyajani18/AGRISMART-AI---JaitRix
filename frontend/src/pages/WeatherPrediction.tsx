@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { fetchWeatherByLocation, searchCity, WeatherForecast } from '../services/weatherApi';
 import { calculateAgriculturalInsights } from '../services/weatherInsights';
-import { MapPin, ThermometerSun, Droplets, CloudRain, Loader2, Calendar, Search } from 'lucide-react';
+import { MapPin, ThermometerSun, Droplets, CloudRain, Loader2, Calendar, Search, ArrowLeft } from 'lucide-react';
 
 export const WeatherPrediction: React.FC = () => {
   const { t } = useLanguage();
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [forecast, setForecast] = useState<WeatherForecast | null>(null);
@@ -73,13 +75,26 @@ export const WeatherPrediction: React.FC = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-5">
-      <div className="text-center mb-5">
-        <h1 className="text-2xl md:text-3xl font-extrabold text-[#0D3B2A] tracking-tight mb-1">
-          {t.weatherPage?.title || 'Farm Weather Forecast'}
-        </h1>
-        <p className="text-[#3A5746] text-sm md:text-base max-w-2xl mx-auto">
-          {t.weatherPage?.subtitle || 'Real-time meteorological data and 7-day outlook for agricultural planning.'}
-        </p>
+      <div className="mb-5 flex items-center justify-between">
+        <button
+          type="button"
+          onClick={() => navigate(-1)}
+          className="inline-flex items-center gap-2 rounded-full border border-[#E2E8F0] bg-white px-4 py-2 text-sm font-bold text-[#17211B] shadow-sm transition hover:border-[#16834A]/30 hover:text-[#16834A]"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span>{t.weatherPage?.back || 'Back'}</span>
+        </button>
+
+        <div className="flex-1 text-center">
+          <h1 className="text-2xl md:text-3xl font-extrabold text-[#0D3B2A] tracking-tight mb-1">
+            {t.weatherPage?.title || 'Farm Weather Forecast'}
+          </h1>
+          <p className="text-[#3A5746] text-sm md:text-base max-w-2xl mx-auto">
+            {t.weatherPage?.subtitle || 'Real-time meteorological data and 7-day outlook for agricultural planning.'}
+          </p>
+        </div>
+
+        <div className="w-[120px]" aria-hidden="true" />
       </div>
 
       {!forecast && (
