@@ -12,22 +12,22 @@ interface DiseaseUploaderProps {
 const SAMPLE_LEAVES = [
   {
     id: 'sample-early-blight',
-    name: 'Powdery Mildew',
+    name: 'Tomato Early Blight',
     cropType: 'Tomato (ટામેટા / टमाटर)',
     growthStage: 'Vegetative foliage growth',
     url: 'test_image_1.jpg',
   },
   {
     id: 'sample-late',
-    name: 'Tomato Late Blight',
+    name: 'Tomato Healthy Leaf',
     cropType: 'Tomato (ટામેટા / टमाटर)',
     growthStage: 'Flowering / Blossom stage',
     url: 'test_image_2.jpg',
   },
   {
     id: 'sample-potato-blight',
-    name: 'Black Measles',
-    cropType: 'graps (બટાટા / आलू)',
+    name: 'Potato Late Blight',
+    cropType: 'Potato (બટાટા / आलू)',
     growthStage: 'Fruiting / Pod development',
     url: 'test_image_3.jpg',
   },

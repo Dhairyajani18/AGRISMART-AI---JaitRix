@@ -9,6 +9,8 @@ export interface DailyWeather {
   temperature_2m_max: number[];
   temperature_2m_min: number[];
   precipitation_sum: number[];
+  relative_humidity_2m_mean?: number[];
+  weather_code?: number[];
 }
 
 export interface WeatherForecast {
@@ -54,7 +56,7 @@ export const searchCity = async (query: string): Promise<LocationSearchResult | 
 export const fetchWeatherByLocation = async (lat: number, lon: number, locationName?: string): Promise<WeatherForecast> => {
   try {
     const response = await fetch(
-      `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,precipitation&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=auto`
+      `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,precipitation&hourly=relative_humidity_2m&daily=temperature_2m_max,temperature_2m_min,precipitation_sum,weather_code&timezone=auto`
     );
     if (!response.ok) {
       throw new Error('Failed to fetch weather data');
@@ -72,6 +74,14 @@ export const fetchWeatherByLocation = async (lat: number, lon: number, locationN
         temperature_2m_max: data.daily.temperature_2m_max,
         temperature_2m_min: data.daily.temperature_2m_min,
         precipitation_sum: data.daily.precipitation_sum,
+        weather_code: data.daily.weather_code,
+        relative_humidity_2m_mean: data.daily.time?.map((day: string) => {
+          const values = data.hourly?.time?.reduce((result: number[], time: string, index: number) => {
+            if (time.startsWith(day) && Number.isFinite(data.hourly.relative_humidity_2m?.[index])) result.push(data.hourly.relative_humidity_2m[index]);
+            return result;
+          }, []);
+          return values?.length ? values.reduce((sum: number, value: number) => sum + value, 0) / values.length : NaN;
+        }),
       },
     };
   } catch (error) {

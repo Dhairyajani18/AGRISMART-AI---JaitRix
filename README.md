@@ -25,9 +25,9 @@ The crop recommendation model returns the top three crops based on:
 
 It uses a Random Forest classifier with one-hot encoding for the categorical inputs. The model file, `Backend/model/crop_model.joblib`, is created by the training script.
 
-### Bonus: Seven-Day Weather Forecast
+### Bonus: Weather-Based Intelligence / Seven-Day Weather Forecast
 
-Users can search for a city or use their current location to view current conditions and a seven-day forecast. The forecast shows daily high and low temperatures and precipitation.
+Users can search for a city or use their current location to view current conditions and a seven-day forecast. The forecast shows daily high and low temperatures and precipitation. It also provides agricultural weather insights including rainfall, heat, humidity, farm-activity, and irrigation guidance based on forecast conditions.
 
 ### Bonus: Multilingual Support
 
@@ -54,9 +54,8 @@ pip install -r requirements.txt
 ```
 
 Create `Backend/.env` if you want to use the weather helper used by the crop form:
-use provided Api-Key(for testing purpose)
 ```env
-OPENWEATHER_API_KEY= 5445c9fc9b1acd71f582bdac7e6f9b39
+OPENWEATHER_API_KEY=your_openweather_api_key
 ```
 
 Create the crop recommendation model:
@@ -149,6 +148,23 @@ The repository contains the trained weights and class list, but not the disease 
 Disease model creation and training process: [Google Colab notebook](https://colab.research.google.com/drive/1-nR4wYrACsRQxC3Nun5PpQG69_-mUUpt?usp=sharing)
 
 ## 5. Architecture
+
+```text
+React Frontend
+  |
+  +-- Crop Disease Detection
+  +-- Crop Recommendation
+  +-- 7-Day Weather Forecast
+  +-- Agricultural Weather Insights
+  |
+  v
+Django REST Backend
+  |
+  +-- EfficientNet-B0
+  +-- Random Forest
+  +-- Weather API
+  +-- Weather Insight Rules
+```
 
 ```text
 Leaf image

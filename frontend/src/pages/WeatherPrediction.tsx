@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { fetchWeatherByLocation, searchCity, WeatherForecast } from '../services/weatherApi';
+import { calculateAgriculturalInsights } from '../services/weatherInsights';
 import { MapPin, ThermometerSun, Droplets, CloudRain, Loader2, Calendar, Search } from 'lucide-react';
 
 export const WeatherPrediction: React.FC = () => {
@@ -10,6 +11,15 @@ export const WeatherPrediction: React.FC = () => {
   const [forecast, setForecast] = useState<WeatherForecast | null>(null);
   const [cityQuery, setCityQuery] = useState('');
   const [isSearchingCity, setIsSearchingCity] = useState(false);
+  const insights = forecast ? calculateAgriculturalInsights(forecast) : null;
+
+  const insightLabel = (level: string) => t.weatherPage?.[`insight${level[0].toUpperCase()}${level.slice(1)}` as 'insightLow'] || level;
+
+  const handleChangeLocation = () => {
+    setForecast(null);
+    setError(null);
+    setCityQuery('');
+  };
 
   const handleSearchCity = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -62,12 +72,12 @@ export const WeatherPrediction: React.FC = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-8">
-      <div className="text-center mb-8">
-        <h1 className="text-3xl md:text-4xl font-extrabold text-[#0D3B2A] tracking-tight mb-3">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-5">
+      <div className="text-center mb-5">
+        <h1 className="text-2xl md:text-3xl font-extrabold text-[#0D3B2A] tracking-tight mb-1">
           {t.weatherPage?.title || 'Farm Weather Forecast'}
         </h1>
-        <p className="text-[#3A5746] text-base md:text-lg max-w-2xl mx-auto">
+        <p className="text-[#3A5746] text-sm md:text-base max-w-2xl mx-auto">
           {t.weatherPage?.subtitle || 'Real-time meteorological data and 7-day outlook for agricultural planning.'}
         </p>
       </div>
@@ -128,40 +138,47 @@ export const WeatherPrediction: React.FC = () => {
       )}
 
       {forecast && (
-        <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
+        <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-700 ease-out">
           {/* Current Conditions */}
-          <div className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-[#E2E8F0]">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-2">
+          <div className="bg-white rounded-3xl p-4 md:p-5 shadow-sm border border-[#E2E8F0]">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-2">
               <h2 className="text-lg font-bold text-[#17211B] flex items-center gap-2">
                 <ThermometerSun className="w-5 h-5 text-[#16834A]" />
                 {t.weatherPage?.current || 'Current Conditions'}
               </h2>
               {forecast.locationName && (
-                <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#F7FAF8] border border-[#E2E8F0] text-sm font-semibold text-[#3A5746]">
+                <div className="flex min-w-0 items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#F7FAF8] border border-[#E2E8F0] text-sm font-semibold text-[#3A5746]">
                   <MapPin className="w-4 h-4 text-[#16834A]" />
-                  {forecast.locationName}
+                  <span className="truncate">{forecast.locationName}</span>
                 </div>
               )}
+              <button
+                type="button"
+                onClick={handleChangeLocation}
+                className="text-sm font-bold text-[#16834A] hover:text-[#116639] transition-colors"
+              >
+                {t.weatherPage?.changeLocation || 'Change location'}
+              </button>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="bg-[#F7FAF8] p-5 rounded-2xl border border-[#E2E8F0]">
-                <div className="text-sm font-bold text-[#3A5746] uppercase tracking-wider mb-1">
+            <div className="grid grid-cols-3 gap-2 md:gap-3">
+              <div className="bg-[#F7FAF8] p-3 md:p-4 rounded-2xl border border-[#E2E8F0]">
+                <div className="text-[10px] md:text-xs font-bold text-[#3A5746] uppercase tracking-wider mb-1">
                   {t.weatherPage?.temp || 'Temperature'}
                 </div>
                 <div className="text-3xl font-extrabold text-[#0D3B2A] flex items-end gap-1">
-                  {forecast.current.temperature.toFixed(1)}<span className="text-lg text-[#527763] mb-1">°C</span>
+                  {forecast.current.temperature.toFixed(1)}<span className="text-lg text-[#527763] mb-1">{'°C'}</span>
                 </div>
               </div>
-              <div className="bg-[#F7FAF8] p-5 rounded-2xl border border-[#E2E8F0]">
-                <div className="text-sm font-bold text-[#3A5746] uppercase tracking-wider mb-1">
+              <div className="bg-[#F7FAF8] p-3 md:p-4 rounded-2xl border border-[#E2E8F0]">
+                <div className="text-[10px] md:text-xs font-bold text-[#3A5746] uppercase tracking-wider mb-1">
                   {t.weatherPage?.humidity || 'Humidity'}
                 </div>
                 <div className="text-3xl font-extrabold text-[#0D3B2A] flex items-end gap-1">
                   {forecast.current.humidity.toFixed(0)}<span className="text-lg text-[#527763] mb-1">%</span>
                 </div>
               </div>
-              <div className="bg-[#F7FAF8] p-5 rounded-2xl border border-[#E2E8F0]">
-                <div className="text-sm font-bold text-[#3A5746] uppercase tracking-wider mb-1">
+              <div className="bg-[#F7FAF8] p-3 md:p-4 rounded-2xl border border-[#E2E8F0]">
+                <div className="text-[10px] md:text-xs font-bold text-[#3A5746] uppercase tracking-wider mb-1">
                   {t.weatherPage?.rain || 'Precipitation'}
                 </div>
                 <div className="text-3xl font-extrabold text-[#0D3B2A] flex items-end gap-1">
@@ -172,34 +189,34 @@ export const WeatherPrediction: React.FC = () => {
           </div>
 
           {/* 7-Day Forecast */}
-          <div className="bg-white rounded-3xl p-6 md:p-8 shadow-sm border border-[#E2E8F0]">
-            <h2 className="text-lg font-bold text-[#17211B] mb-6 flex items-center gap-2">
+          <div className="bg-white rounded-3xl p-4 md:p-5 shadow-sm border border-[#E2E8F0]">
+            <h2 className="text-lg font-bold text-[#17211B] mb-3 flex items-center gap-2">
               <Calendar className="w-5 h-5 text-[#16834A]" />
               {t.weatherPage?.forecast || '7-Day Forecast'}
             </h2>
-            <div className="space-y-3">
+            <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-2">
               {forecast.daily.time.map((time, index) => {
                 const date = new Date(time);
                 const dayName = date.toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' });
                 return (
-                  <div key={time} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-[#F7FAF8] rounded-2xl border border-[#E2E8F0]/50 gap-4">
-                    <div className="font-bold text-[#17211B] w-32">{dayName}</div>
+                  <div key={time} className="flex flex-col p-3 bg-[#F7FAF8] rounded-2xl border border-[#E2E8F0]/50 gap-2 text-center">
+                    <div className="font-bold text-sm text-[#17211B]">{dayName}</div>
                     
-                    <div className="flex-1 flex flex-wrap gap-4 md:gap-8 text-sm">
-                      <div className="flex items-center gap-2">
-                        <ThermometerSun className="w-4 h-4 text-orange-500" />
+                    <div className="flex flex-col gap-1 text-xs">
+                      <div className="flex items-center justify-center gap-1">
+                        <ThermometerSun className="w-3.5 h-3.5 text-orange-500" />
                         <span className="font-semibold text-[#0D3B2A]">
-                          {t.weatherPage?.high || 'High'}: {forecast.daily.temperature_2m_max[index].toFixed(1)}°C
+                          {t.weatherPage?.high || 'High'}: {forecast.daily.temperature_2m_max[index].toFixed(1)}{'°C'}
                         </span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <ThermometerSun className="w-4 h-4 text-blue-500" />
+                      <div className="flex items-center justify-center gap-1">
+                        <ThermometerSun className="w-3.5 h-3.5 text-blue-500" />
                         <span className="font-semibold text-[#3A5746]">
-                          {t.weatherPage?.low || 'Low'}: {forecast.daily.temperature_2m_min[index].toFixed(1)}°C
+                          {t.weatherPage?.low || 'Low'}: {forecast.daily.temperature_2m_min[index].toFixed(1)}{'°C'}
                         </span>
                       </div>
-                      <div className="flex items-center gap-2">
-                        <CloudRain className="w-4 h-4 text-blue-400" />
+                      <div className="flex items-center justify-center gap-1">
+                        <CloudRain className="w-3.5 h-3.5 text-blue-400" />
                         <span className="font-semibold text-[#3A5746]">
                           {forecast.daily.precipitation_sum[index].toFixed(1)} mm
                         </span>
@@ -210,6 +227,31 @@ export const WeatherPrediction: React.FC = () => {
               })}
             </div>
           </div>
+
+          {insights && (
+            <div className="bg-white rounded-3xl p-4 md:p-5 shadow-sm border border-[#E2E8F0]">
+              <h2 className="text-lg font-bold text-[#17211B] mb-2 flex items-center gap-2">
+                <Droplets className="w-5 h-5 text-[#16834A]" />
+                {t.weatherPage?.agriculturalInsights || 'Agricultural Weather Insights'}
+              </h2>
+              <p className="text-xs text-[#527763] mb-3">{t.weatherPage?.insightNotice || 'Forecast-based decision support, not a crop-specific irrigation schedule.'}</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-2">
+                {[
+                  [t.weatherPage?.rainfallRisk || 'Rainfall Risk', insightLabel(insights.rainfall.level), (t.weatherPage?.rainfallMessage || '{total} mm of rain is expected across the forecast.').replace('{total}', insights.rainfall.total.toFixed(1))],
+                  [t.weatherPage?.heatRisk || 'Heat Risk', insightLabel(insights.heat.level), (t.weatherPage?.heatMessage || 'Temperatures may reach {temperature}°C during the forecast.').replace('{temperature}', insights.heat.maximum.toFixed(1))],
+                  ...(insights.humidity ? [[t.weatherPage?.humidityRisk || 'Humidity Risk', insightLabel(insights.humidity.level), (t.weatherPage?.humidityMessage || 'Average forecast humidity is {humidity}%.').replace('{humidity}', insights.humidity.average.toFixed(0))]] : []),
+                  [t.weatherPage?.farmActivity || 'Farm Activity', insightLabel(insights.farmActivity.level), t.weatherPage?.[`farm${insights.farmActivity.level[0].toUpperCase()}${insights.farmActivity.level.slice(1)}` as 'farmFavorable'] || 'Conditions are based on the full forecast.'],
+                  [t.weatherPage?.irrigationGuidance || 'Irrigation Guidance', insightLabel(insights.irrigation.level), t.weatherPage?.[`irrigation${insights.irrigation.level[0].toUpperCase()}${insights.irrigation.level.slice(1)}` as 'irrigationReduce'] || 'Use this as a forecast-based indicator.'],
+                ].map(([title, level, message]) => (
+                  <div key={String(title)} className="rounded-2xl border border-[#E2E8F0] bg-[#F7FAF8] p-3">
+                    <div className="text-[10px] font-bold uppercase tracking-wider text-[#3A5746]">{title}</div>
+                    <div className="mt-0.5 text-lg font-extrabold text-[#0D3B2A]">{level}</div>
+                    <p className="mt-1 text-xs leading-4 text-[#527763]">{message}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
