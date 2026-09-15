@@ -49,7 +49,7 @@ export const CropForm: React.FC<CropFormProps> = ({ onSubmit, isLoading }) => {
 
   const handleFetchWeather = () => {
     if (!navigator.geolocation) {
-      setWeatherError('Geolocation is not supported by your browser.');
+      setWeatherError(t.cropForm.locationUnsupported);
       return;
     }
 
@@ -69,13 +69,13 @@ export const CropForm: React.FC<CropFormProps> = ({ onSubmit, isLoading }) => {
             rainfall: Math.round(weather.current.rainfall),
           }));
         } catch (err) {
-          setWeatherError('Failed to fetch local weather.');
+          setWeatherError(t.cropForm.weatherFetchFailed);
         } finally {
           setIsFetchingWeather(false);
         }
       },
       () => {
-        setWeatherError('Location access denied.');
+        setWeatherError(t.cropForm.locationDenied);
         setIsFetchingWeather(false);
       }
     );
@@ -101,7 +101,7 @@ export const CropForm: React.FC<CropFormProps> = ({ onSubmit, isLoading }) => {
         setWeatherError('City not found.');
       }
     } catch (err) {
-      setWeatherError('Failed to fetch weather for city.');
+      setWeatherError(t.cropForm.cityWeatherFailed);
     } finally {
       setIsFetchingWeather(false);
     }
@@ -299,7 +299,7 @@ export const CropForm: React.FC<CropFormProps> = ({ onSubmit, isLoading }) => {
               <div className="relative flex-1 sm:w-64 md:w-80">
                 <input
                   type="text"
-                  placeholder="Enter city name..."
+                  placeholder={t.cropForm.cityPlaceholder}
                   value={cityQuery}
                   onChange={(e) => setCityQuery(e.target.value)}
                   onKeyDown={(e) => { if(e.key === 'Enter') { e.preventDefault(); handleCitySearch(); } }}
@@ -315,7 +315,7 @@ export const CropForm: React.FC<CropFormProps> = ({ onSubmit, isLoading }) => {
                 className="px-4 py-2.5 bg-[#17211B] text-white rounded-xl text-xs font-bold hover:bg-black transition-colors disabled:opacity-50 flex items-center justify-center gap-1.5 cursor-pointer"
               >
                 <Search className="w-3.5 h-3.5" />
-                <span>Search</span>
+                <span>{t.cropForm.searchCity}</span>
               </button>
 
               <button
@@ -330,7 +330,7 @@ export const CropForm: React.FC<CropFormProps> = ({ onSubmit, isLoading }) => {
                 ) : (
                   <MapPin className="w-4 h-4" />
                 )}
-                <span>Use Current Location</span>
+                <span>{t.cropForm.fetchWeather}</span>
               </button>
             </div>
           </div>

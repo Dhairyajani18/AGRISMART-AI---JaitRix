@@ -67,6 +67,7 @@ export const DiseaseResult: React.FC<DiseaseResultProps> = ({
       'northern leaf blight': { en: 'Northern Leaf Blight', hi: 'नॉर्दर्न लीफ ब्लाइट', gu: 'નોર્થન પાન બ્લાઇટ' },
       'early blight': { en: 'Early Blight', hi: 'अर्ली ब्लाइट', gu: 'અરલી બ્લાઇટ' },
       'late blight': { en: 'Late Blight', hi: 'लेट ब्लाइट', gu: 'લેટ બ્લાઇટ' },
+      'leaf scorch': { en: 'Leaf Scorch', hi: 'लीफ स्कॉर्च', gu: 'પાનનો સ્કોર્ચ' },
       'leaf mold': { en: 'Leaf Mold', hi: 'लीफ mould', gu: 'પાનનું mould' },
       'bacterial spot': { en: 'Bacterial Spot', hi: 'बैक्टीरियल स्पॉट', gu: 'બેક્ટેરિયલ સ્પોટ' },
       'tomato mosaic virus': { en: 'Tomato Mosaic Virus', hi: 'टमाटो मोज़ेक वायरस', gu: 'ટમેટા મોઝેક વાયરસ' },
@@ -94,6 +95,7 @@ export const DiseaseResult: React.FC<DiseaseResultProps> = ({
       grape: { en: 'Grape', hi: 'अंगूर', gu: 'દ્રાક્ષ' },
       pepper: { en: 'Pepper', hi: 'मिर्च', gu: 'મરચાં' },
       cherry: { en: 'Cherry', hi: 'चेरी', gu: 'ચેરી' },
+      strawberry: { en: 'Strawberry', hi: 'स्ट्रॉबेरी', gu: 'સ્ટ્રોબેરી' },
     };
 
     return cropMap[normalized]?.[language] ?? value;
@@ -148,7 +150,7 @@ export const DiseaseResult: React.FC<DiseaseResultProps> = ({
         },
         gu: {
           description: [
-            'આ ફંગસથી થતો રોગ પાંદડા અને jeunes નરમ ભાગો પર સફેદ, પાઉડર જેવી_grwoth બનાવે છે.',
+            'આ ફૂગજન્ય રોગ પાંદડા અને નરમ ભાગો પર સફેદ, પાઉડર જેવી વૃદ્ધિ કરે છે.',
             'પાંદડાં પર સફેદ પાઉડર જેવી કોટિંગ',
             'વિકૃત નાનાં પાંદડા',
             'પાકની વૃદ્ધિ ઘટી જાય છે',
@@ -159,6 +161,53 @@ export const DiseaseResult: React.FC<DiseaseResultProps> = ({
             'છોડની આસપાસ હવાની જાળવણી સુધારો.',
             'વધારે નાઇટ્રોજન ખાતરનો ઉપયોગ ટાળો.',
             'નવા વિકાસનું નિયમિત નિરીક્ષણ કરો.',
+          ],
+        },
+      },
+      'leaf scorch': {
+        en: {
+          description: [
+            'A disease that causes dark lesions and scorched-looking areas on strawberry leaves.',
+            'Small dark purple or brown spots',
+            'Lesions that may merge together',
+            'Scorched appearance of leaves',
+            'Leaf deterioration in severe cases',
+          ],
+          precautions: [
+            'Remove severely affected leaves.',
+            'Remove fallen infected plant debris.',
+            'Maintain good air circulation.',
+            'Avoid prolonged leaf wetness.',
+          ],
+        },
+        hi: {
+          description: [
+            'यह रोग स्ट्रॉबेरी की पत्तियों पर गहरे घाव और झुलसे हुए क्षेत्र पैदा करता है।',
+            'छोटे गहरे बैंगनी या भूरे धब्बे',
+            'घाव आपस में मिल सकते हैं',
+            'पत्तियां झुलसी हुई दिखाई देती हैं',
+            'गंभीर स्थिति में पत्तियां खराब हो सकती हैं',
+          ],
+          precautions: [
+            'बहुत अधिक प्रभावित पत्तियों को हटा दें।',
+            'गिरी हुई संक्रमित पत्तियों और पौधों के अवशेषों को हटा दें।',
+            'पौधों के आसपास हवा का अच्छा प्रवाह बनाए रखें।',
+            'पत्तियों को लंबे समय तक गीला रहने से बचाएं।',
+          ],
+        },
+        gu: {
+          description: [
+            'આ રોગ સ્ટ્રોબેરીના પાંદડાં પર ઘેરા ડાઘા અને દાઝેલા જેવા ભાગો બનાવે છે.',
+            'નાના ઘેરા જાંબલી અથવા ભૂરા ડાઘા',
+            'ડાઘા એકબીજા સાથે જોડાઈ શકે છે',
+            'પાંદડાં દાઝેલા જેવા દેખાય છે',
+            'ગંભીર સ્થિતિમાં પાંદડાં ખરાબ થઈ શકે છે',
+          ],
+          precautions: [
+            'ખૂબ અસરગ્રસ્ત પાંદડાં દૂર કરો.',
+            'પડેલા સંક્રમિત પાંદડાં અને છોડના અવશેષો દૂર કરો.',
+            'છોડની આસપાસ હવાની સારી અવરજવર જાળવો.',
+            'પાંદડાં લાંબા સમય સુધી ભીનાં રહે તે ટાળો.',
           ],
         },
       },
@@ -225,9 +274,8 @@ export const DiseaseResult: React.FC<DiseaseResultProps> = ({
   const localizedGrowthStage = localizeGrowthStage(growthStage || '');
   const localizedAiFindings = localizeAdviceEntries(aiFindings, 'description');
   const localizedRecommendedActions = localizeAdviceEntries(recommendedActions, 'precautions');
-  const localizedSpecimenLabel =
-    language === 'hi' ? 'पत्ती नमूना' : language === 'gu' ? 'નમૂના પાંદડા' : 'Specimen Leaf';
-  const localizedHeatmapLabel = language === 'hi' ? 'एआई हीटमैप' : language === 'gu' ? 'એઆઈ હીટમેપ' : 'AI Heatmap';
+  const localizedSpecimenLabel = t.diseaseResult.specimenLabel;
+  const localizedHeatmapLabel = t.diseaseResult.heatmapLabel;
 
   // Status-dependent styling and badges
   const isHealthy = status === 'healthy';
@@ -336,7 +384,7 @@ export const DiseaseResult: React.FC<DiseaseResultProps> = ({
                   percentage={confidence}
                   size={100}
                   strokeWidth={9}
-                  sublabel="Confidence"
+                  sublabel={t.diseaseResult.confidenceLabel}
                 />
               </div>
             </div>
@@ -472,7 +520,7 @@ export const DiseaseResult: React.FC<DiseaseResultProps> = ({
               {advisoryNote && (
                 <div className="p-4 rounded-2xl bg-[#E5F6EC] border border-[#16834A]/20">
                   <h5 className="text-xs font-bold uppercase text-[#16834A] mb-1">
-                    Clinical Agronomist Note
+                    {t.diseaseResult.clinicalNote}
                   </h5>
                   <p className="text-sm text-[#0D3B2A] leading-relaxed">{advisoryNote}</p>
                 </div>
@@ -481,12 +529,10 @@ export const DiseaseResult: React.FC<DiseaseResultProps> = ({
               <div className="p-4 rounded-2xl bg-[#F7FAF8] border border-[#E2E8F0] space-y-2">
                 <div className="flex items-center gap-2 text-xs font-bold uppercase text-[#66736B]">
                   <Layers className="w-4 h-4 text-[#16834A]" />
-                  <span>Bio-Safety & Prevention Protocol</span>
+                  <span>{t.diseaseResult.preventionProtocol}</span>
                 </div>
                 <p className="text-xs text-[#17211B] leading-relaxed">
-                  Clean pruning shears with 70% isopropyl alcohol or bleach solution between cuts.
-                  Avoid walking through wet foliage in early morning hours to curtail mechanical transmission
-                  of fungal conidia.
+                  {t.diseaseResult.preventionText}
                 </p>
               </div>
             </div>

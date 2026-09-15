@@ -107,7 +107,7 @@ export const CropResult: React.FC<CropResultProps> = ({ result, onPredictAgain }
               size={150}
               strokeWidth={12}
               label={t.cropResult.suitability}
-              sublabel="Suitability"
+              sublabel={t.cropResult.suitability}
             />
           </div>
         </div>

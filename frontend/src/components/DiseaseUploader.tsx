@@ -141,7 +141,7 @@ export const DiseaseUploader: React.FC<DiseaseUploaderProps> = ({ onAnalyze, isA
     } catch (error) {
       setPreviewUrl(null);
       setSelectedFile(null);
-      setValidationError('Unable to load this sample image. Please upload an image from your device.');
+      setValidationError(t.errors.sampleLoadFailed);
     }
   };
 
@@ -262,14 +262,14 @@ export const DiseaseUploader: React.FC<DiseaseUploaderProps> = ({ onAnalyze, isA
             <div className="relative rounded-3xl overflow-hidden bg-[#0D3B2A] aspect-video sm:aspect-[21/9] flex items-center justify-center shadow-lg border border-[#0D3B2A]">
               <img
                 src={previewUrl}
-                alt="Selected leaf specimen"
+                alt={t.disease.uploadTitle}
                 className="w-full h-full object-contain max-h-[340px]"
               />
 
               {/* Status overlay */}
               <div className="absolute top-4 left-4 px-3 py-1 rounded-full bg-black/60 backdrop-blur-xs text-white text-xs font-semibold flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-[#16A34A] animate-pulse" />
-                <span>Specimen Ready</span>
+                <span>{t.disease.specimenReady}</span>
               </div>
 
               {/* Action Buttons overlay */}

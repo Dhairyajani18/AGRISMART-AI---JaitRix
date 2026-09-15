@@ -47,7 +47,7 @@ export const WeatherPrediction: React.FC = () => {
 
   const handleGetLocation = () => {
     if (!navigator.geolocation) {
-      setError('Geolocation is not supported by your browser.');
+      setError(t.weatherPage?.locationUnsupported || t.errors.networkError);
       return;
     }
 
@@ -61,13 +61,13 @@ export const WeatherPrediction: React.FC = () => {
           const data = await fetchWeatherByLocation(latitude, longitude);
           setForecast(data);
         } catch (err) {
-          setError('Failed to fetch weather data. Please try again later.');
+          setError(t.weatherPage?.fetchFailed || t.errors.networkError);
         } finally {
           setLoading(false);
         }
       },
       () => {
-        setError('Unable to retrieve your location. Please allow location access.');
+        setError(t.weatherPage?.locationDenied || t.errors.networkError);
         setLoading(false);
       }
     );

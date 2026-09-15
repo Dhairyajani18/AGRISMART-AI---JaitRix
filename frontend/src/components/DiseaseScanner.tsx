@@ -30,7 +30,7 @@ export const DiseaseScanner: React.FC<DiseaseScannerProps> = ({ imageSrc, step }
             <Scan className="w-4 h-4" />
           </div>
           <span className="text-sm font-extrabold tracking-wide text-[#E5F6EC]">
-            AGRISMART AI VISION ENGINE
+            {t.diseaseScanning.engineName}
           </span>
         </div>
 
@@ -45,7 +45,7 @@ export const DiseaseScanner: React.FC<DiseaseScannerProps> = ({ imageSrc, step }
         {/* Leaf Image under analysis */}
         <img
           src={imageSrc}
-          alt="Scanning leaf specimen"
+          alt={t.diseaseScanning.scanAlt}
           className="w-full h-full object-contain filter contrast-105"
         />
 
@@ -88,7 +88,7 @@ export const DiseaseScanner: React.FC<DiseaseScannerProps> = ({ imageSrc, step }
           className="absolute top-1/4 left-1/3 p-1.5 rounded-lg border border-[#F59E0B] bg-[#F59E0B]/15 z-10 text-[10px] font-mono text-[#F59E0B] flex items-center gap-1 shadow-xs"
         >
           <Sparkles className="w-2.5 h-2.5" />
-          <span>Area A1: Tissue Lesion</span>
+          <span>{t.diseaseScanning.lesionLabel}</span>
         </motion.div>
 
         <motion.div
@@ -97,7 +97,7 @@ export const DiseaseScanner: React.FC<DiseaseScannerProps> = ({ imageSrc, step }
           transition={{ duration: 2.1, repeat: Infinity, delay: 0.5 }}
           className="absolute bottom-1/3 right-1/4 p-1.5 rounded-lg border border-[#22C55E] bg-[#22C55E]/15 z-10 text-[10px] font-mono text-[#22C55E] flex items-center gap-1 shadow-xs"
         >
-          <span>Chlorophyll Zone</span>
+          <span>{t.diseaseScanning.chlorophyllLabel}</span>
         </motion.div>
       </div>
 
