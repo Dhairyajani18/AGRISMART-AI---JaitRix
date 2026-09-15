@@ -4,7 +4,7 @@ AgriSmart AI is an intelligent agriculture support platform developed for SIH 20
 
 ## 🎥 Demo
 
-**Demo Video:** [Watch AgriSmart AI Demo](ADD_DEMO_VIDEO_LINK)
+**Demo Video:** [Watch AgriSmart AI Demo](https://youtu.be/WegbApyZPxQ?si=JMxUgKz_fp3jfeBx)
 
 ## 1. Modules Built
 
@@ -199,7 +199,7 @@ Farm and soil inputs
 
 ## 7. Demo and Deployment
 
-Demo Video: [ADD DEMO VIDEO LINK]
+Demo Video: [https://youtu.be/WegbApyZPxQ?si=JMxUgKz_fp3jfeBx]
 
 
 ## 8. References
