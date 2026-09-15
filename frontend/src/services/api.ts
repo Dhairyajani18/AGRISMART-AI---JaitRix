@@ -62,17 +62,21 @@ export async function request<T>(
 
     if (!response.ok) {
       let errorMessage = `Server returned ${response.status} ${response.statusText}`;
+      let errorDetails: unknown;
       try {
         const errorJson = await response.json();
+        errorDetails = errorJson;
         if (errorJson && errorJson.message) {
           errorMessage = errorJson.message;
         } else if (errorJson && errorJson.detail) {
           errorMessage = typeof errorJson.detail === 'string' ? errorJson.detail : JSON.stringify(errorJson.detail);
+        } else if (errorJson && errorJson.error) {
+          errorMessage = typeof errorJson.error === 'string' ? errorJson.error : JSON.stringify(errorJson.error);
         }
       } catch {
         // Fallback to text or status text
       }
-      throw new AppApiError(errorMessage, response.status);
+      throw new AppApiError(errorMessage, response.status, errorDetails);
     }
 
     return (await response.json()) as T;

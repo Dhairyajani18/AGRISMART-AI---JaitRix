@@ -1,5 +1,5 @@
 import { DiseaseDetectionResponse, DiseaseInputPayload } from '../types/disease';
-import { DISEASE_PREDICTION_ENDPOINT, request } from './api';
+import { AppApiError, DISEASE_PREDICTION_ENDPOINT, request } from './api';
 
 /**
  * Service to analyze crop disease from leaf image.
@@ -8,7 +8,7 @@ import { DISEASE_PREDICTION_ENDPOINT, request } from './api';
 export async function detectDisease(payload: DiseaseInputPayload): Promise<DiseaseDetectionResponse> {
   const formData = new FormData();
   formData.append('image', payload.imageFile);
-  const response = await request<{
+  let response: {
     class: string;
     crop: string;
     disease: string;
@@ -17,7 +17,17 @@ export async function detectDisease(payload: DiseaseInputPayload): Promise<Disea
     symptoms: string[];
     precautions: string[];
     severity: DiseaseDetectionResponse['severity'];
-  }>(DISEASE_PREDICTION_ENDPOINT, { method: 'POST', body: formData });
+  };
+  try {
+    response = await request<typeof response>(DISEASE_PREDICTION_ENDPOINT, { method: 'POST', body: formData });
+  } catch (error) {
+    if (error instanceof AppApiError && typeof error.details === 'object' && error.details !== null) {
+      const errorCode = (error.details as { error_code?: string }).error_code;
+      if (errorCode === 'INVALID_LEAF_IMAGE') throw new Error('INVALID_LEAF_IMAGE');
+      if (errorCode === 'LOW_CONFIDENCE_IMAGE') throw new Error('LOW_CONFIDENCE_IMAGE');
+    }
+    throw error;
+  }
 
   return {
     status: response.disease.toLowerCase().includes('healthy') ? 'healthy' : 'disease_detected',

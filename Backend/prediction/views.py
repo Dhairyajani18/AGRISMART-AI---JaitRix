@@ -3,7 +3,7 @@ import io
 import urllib.parse
 import requests
 import numpy as np
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 from dotenv import load_dotenv
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -22,11 +22,43 @@ class PredictDiseaseView(APIView):
     def post(self, request):
         image = request.FILES.get("image")
         if not image:
-            return Response({"error": "Image is required"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {
+                    "error_code": "INVALID_LEAF_IMAGE",
+                    "error": "Please upload a valid image of a crop leaf.",
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
 
-        predicted_output = predict_image(image)
+        try:
+            predicted_output = predict_image(image)
+        except (UnidentifiedImageError, OSError):
+            return Response(
+                {
+                    "error_code": "INVALID_LEAF_IMAGE",
+                    "error": "Please upload a valid image of a crop leaf.",
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        if not predicted_output["valid_leaf"]:
+            return Response(
+                {
+                    "error_code": "INVALID_LEAF_IMAGE",
+                    "error": "Please upload a valid image of a crop leaf.",
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
         predicted_class = predicted_output['class']
         confidence = predicted_output['confidence']
+        if confidence <= 0.38:
+            return Response(
+                {
+                    "error_code": "LOW_CONFIDENCE_IMAGE",
+                    "error": "Image confidence is too low. Please upload a clear crop-leaf image with good lighting and minimal shadows.",
+                },
+                status=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            )
 
         info = DISEASE_INFO.get(predicted_class)
         if info is None:

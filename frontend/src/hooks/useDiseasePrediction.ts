@@ -1,10 +1,12 @@
 import { useState, useCallback } from 'react';
 import { DiseaseDetectionResponse, DiseaseInputPayload } from '../types/disease';
 import { detectDisease } from '../services/diseaseApi';
+import { useLanguage } from '../context/LanguageContext';
 
 export type DiseaseScanStep = 0 | 1 | 2 | 3 | 4;
 
 export function useDiseasePrediction() {
+  const { t } = useLanguage();
   const [scanning, setScanning] = useState<boolean>(false);
   const [scanStep, setScanStep] = useState<DiseaseScanStep>(0);
   const [result, setResult] = useState<DiseaseDetectionResponse | null>(null);
@@ -37,7 +39,12 @@ export function useDiseasePrediction() {
       clearTimeout(t2);
       clearTimeout(t3);
       const e = err as Error;
-      setError(e.message || 'Error occurred during AI leaf diagnosis.');
+      const message = e.message === 'INVALID_LEAF_IMAGE'
+        ? t.errors.invalidLeafImage
+        : e.message === 'LOW_CONFIDENCE_IMAGE'
+          ? t.errors.lowConfidenceImage
+          : e.message;
+      setError(message || t.errors.predictionFailed);
     } finally {
       setScanning(false);
       setScanStep(0);

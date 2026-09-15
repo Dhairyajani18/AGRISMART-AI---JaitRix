@@ -237,6 +237,8 @@ export const en = {
   },
   errors: {
     invalidImage: 'Please upload a valid image file (JPG, PNG, WEBP).',
+    invalidLeafImage: 'Please upload a valid image of a crop leaf.',
+    lowConfidenceImage: 'The image is unclear or has poor lighting/shadows. Please upload a clear crop-leaf image.',
     imageTooLarge: 'The selected image exceeds 10MB. Please upload a smaller photo.',
     networkError: 'Unable to connect to the prediction server. Please check your internet or try again.',
     predictionFailed:

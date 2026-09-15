@@ -6,6 +6,7 @@ from torchvision import models, transforms
 from PIL import Image
 import joblib
 import pandas as pd
+import numpy as np
 
 # Folder where predictor.py exists
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -109,9 +110,29 @@ transform = transforms.Compose([
 # -----------------------------
 # 6. Prediction function
 # -----------------------------
+def _is_leaf_like(image):
+    """Reject clearly non-vegetation images before disease classification."""
+    rgb = np.asarray(image.resize((128, 128)).convert("RGB"), dtype=np.float32) / 255.0
+    red, green, blue = rgb[..., 0], rgb[..., 1], rgb[..., 2]
+    maximum = rgb.max(axis=2)
+    minimum = rgb.min(axis=2)
+    saturation = np.divide(maximum - minimum, maximum, out=np.zeros_like(maximum), where=maximum > 0)
+
+    green_pixels = (green > red * 1.05) & (green > blue * 1.05) & (saturation > 0.12)
+    earthy_pixels = (red > blue * 1.15) & (green > blue * 1.05) & (saturation > 0.12)
+    vegetation_ratio = np.mean(green_pixels | earthy_pixels)
+    return vegetation_ratio >= 0.20
+
+
 def predict_image(image_file):
 
     image = Image.open(image_file).convert("RGB")
+    if not _is_leaf_like(image):
+        return {
+            "valid_leaf": False,
+            "class": None,
+            "confidence": 0.0,
+        }
 
     image = transform(image)
     image = image.unsqueeze(0)
@@ -129,6 +150,7 @@ def predict_image(image_file):
         )
 
     return {
+        "valid_leaf": True,
         "class": class_names[predicted.item()],
         "confidence": float(confidence.item())
     }
