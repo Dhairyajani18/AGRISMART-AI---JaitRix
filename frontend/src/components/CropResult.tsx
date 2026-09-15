@@ -10,10 +10,48 @@ interface CropResultProps {
 }
 
 export const CropResult: React.FC<CropResultProps> = ({ result, onPredictAgain }) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [showDetailsModal, setShowDetailsModal] = useState<boolean>(false);
 
   const { bestCrop, alternativeCrops } = result;
+
+  const localizeCropName = (name: string) => {
+    const normalized = name.trim().toLowerCase();
+    const cropMap: Record<string, Record<'en' | 'hi' | 'gu', string>> = {
+      rice: { en: 'Rice', hi: 'धान', gu: 'ચોખા' },
+      wheat: { en: 'Wheat', hi: 'गेहूं', gu: 'ઘઉં' },
+      cotton: { en: 'Cotton', hi: 'कपास', gu: 'કપાસ' },
+      maize: { en: 'Maize', hi: 'मक्का', gu: 'મકાઈ' },
+      sugarcane: { en: 'Sugarcane', hi: 'गन्ना', gu: 'શેરડી' },
+      pulses: { en: 'Pulses', hi: 'दालें', gu: 'દાળ' },
+      mustard: { en: 'Mustard', hi: 'सरसों', gu: 'સરસવ' },
+      potato: { en: 'Potato', hi: 'आलू', gu: 'બટાટા' },
+      tomato: { en: 'Tomato', hi: 'टमाटर', gu: 'ટમેટા' },
+      chilli: { en: 'Chilli', hi: 'मिर्च', gu: 'મરચાં' },
+      paddy: { en: 'Paddy', hi: 'धान', gu: 'ડાંગર' },
+      thinai: { en: 'Thinai', hi: 'थिनाई', gu: 'થિનાઈ' },
+      millet: { en: 'Millet', hi: 'बाजरा', gu: 'મિલેટ' },
+      'pearl millet': { en: 'Pearl Millet', hi: 'बाजरा', gu: 'પીયર મીલેટ' },
+      bajra: { en: 'Bajra', hi: 'बाजरा', gu: 'બાજરા' },
+      groundnut: { en: 'Groundnut', hi: 'मूंगफली', gu: 'ગ્રાઉન્ડનટ' },
+      'finger millet': { en: 'Finger Millet', hi: 'रागी', gu: 'ફિંગર મિલેટ' },
+      ragi: { en: 'Finger Millet', hi: 'रागी', gu: 'રાગી' },
+      sesame: { en: 'Sesame', hi: 'तिल', gu: 'તલ' },
+      til: { en: 'Til', hi: 'तिल', gu: 'તલ' },
+      soyabean: { en: 'Soyabean', hi: 'सोयाबीन', gu: 'સોયાબીન' },
+      soybean: { en: 'Soybean', hi: 'सोयाबीन', gu: 'સોયાબીન' },
+      gingely: { en: 'Gingelly / Sesame', hi: 'तिल', gu: 'તલ' },
+      sorghum: { en: 'Sorghum', hi: 'ज्वार', gu: 'જવાર' },
+      gram: { en: 'Gram', hi: 'चना', gu: 'ચણા' },
+      barley: { en: 'Barley', hi: 'जौ', gu: 'બાજરી' },
+    };
+
+    return cropMap[normalized]?.[language] ?? name;
+  };
+
+  const bestCropName = localizeCropName(bestCrop.name);
+  const bestCropSummary = bestCrop.summary || t.cropResult.defaultSummary;
+  const bestCropReasons = bestCrop.reasons && bestCrop.reasons.length > 0 ? bestCrop.reasons : [t.cropResult.reasonDefault];
 
   return (
     <div id="crop-result-container" className="space-y-8 animate-in fade-in zoom-in-95 duration-300">
@@ -31,12 +69,12 @@ export const CropResult: React.FC<CropResultProps> = ({ result, onPredictAgain }
             <div className="flex items-center justify-center lg:justify-start gap-4">
               <span className="text-5xl sm:text-6xl">{bestCrop.icon || '🌱'}</span>
               <h1 className="text-3xl sm:text-5xl font-black text-[#0D3B2A] tracking-tight">
-                {bestCrop.name}
+                {bestCropName}
               </h1>
             </div>
 
             <p className="text-base sm:text-lg text-[#66736B] leading-relaxed">
-              {bestCrop.summary}
+              {bestCropSummary}
             </p>
 
             <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3">
@@ -79,12 +117,12 @@ export const CropResult: React.FC<CropResultProps> = ({ result, onPredictAgain }
           <h3 className="text-lg font-bold text-[#0D3B2A] mb-4 flex items-center gap-2">
             <span>💡</span>
             <span>
-              {t.cropResult.whyTitle} {bestCrop.name}?
+              {t.cropResult.whyTitle} {bestCropName}?
             </span>
           </h3>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3.5">
-            {bestCrop.reasons.map((reason, idx) => (
+            {bestCropReasons.map((reason, idx) => (
               <div
                 key={idx}
                 className="flex items-start gap-3 p-3.5 rounded-xl bg-[#F7FAF8] border border-[#E2E8F0]/80"
@@ -115,7 +153,7 @@ export const CropResult: React.FC<CropResultProps> = ({ result, onPredictAgain }
                   <div className="flex items-center justify-between mb-3">
                     <div className="flex items-center gap-3">
                       <span className="text-3xl">{alt.icon || '🌱'}</span>
-                      <h4 className="text-xl font-bold text-[#17211B]">{alt.name}</h4>
+                      <h4 className="text-xl font-bold text-[#17211B]">{localizeCropName(alt.name)}</h4>
                     </div>
                     <span className="px-3 py-1 rounded-full text-xs font-black font-mono bg-[#E5F6EC] text-[#16834A] border border-[#16834A]/20">
                       {alt.suitability.toFixed(2)}% {t.cropResult.suitability}
@@ -123,11 +161,11 @@ export const CropResult: React.FC<CropResultProps> = ({ result, onPredictAgain }
                   </div>
 
                   <p className="text-sm text-[#66736B] leading-relaxed mb-4">
-                    {alt.summary}
+                    {alt.summary || t.cropResult.defaultSummary}
                   </p>
 
                   <div className="space-y-1.5">
-                    {alt.reasons.slice(0, 2).map((r, rIdx) => (
+                    {(alt.reasons && alt.reasons.length > 0 ? alt.reasons : [t.cropResult.reasonDefault]).slice(0, 2).map((r, rIdx) => (
                       <div key={rIdx} className="flex items-center gap-2 text-xs text-[#17211B]">
                         <div className="w-1.5 h-1.5 rounded-full bg-[#16834A]" />
                         <span>{r}</span>
@@ -159,7 +197,7 @@ export const CropResult: React.FC<CropResultProps> = ({ result, onPredictAgain }
             <div className="flex items-center gap-3 mb-6">
               <span className="text-4xl">{bestCrop.icon || '🌱'}</span>
               <div>
-                <h3 className="text-2xl font-black text-[#0D3B2A]">{bestCrop.name}</h3>
+                <h3 className="text-2xl font-black text-[#0D3B2A]">{bestCropName}</h3>
                 <p className="text-xs text-[#16834A] font-bold uppercase tracking-wider">
                   {t.cropResult.modalTitle}
                 </p>

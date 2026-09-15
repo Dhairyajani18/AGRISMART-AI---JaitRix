@@ -26,7 +26,7 @@ export const DiseaseResult: React.FC<DiseaseResultProps> = ({
   originalImageSrc,
   onReset,
 }) => {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [showDetailedModal, setShowDetailedModal] = useState<boolean>(false);
   const [activeImageTab, setActiveImageTab] = useState<'original' | 'heatmap'>('original');
 
@@ -43,6 +43,191 @@ export const DiseaseResult: React.FC<DiseaseResultProps> = ({
     heatmapUrl,
     advisoryNote,
   } = result;
+
+  const localizeDiseaseName = (name: string) => {
+    const normalized = name
+      .trim()
+      .toLowerCase()
+      .replace(/[_/]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+    const diseaseMap: Record<string, Record<'en' | 'hi' | 'gu', string>> = {
+      'powdery mildew': { en: 'Powdery Mildew', hi: 'पाउडरी मिल्ड्यू', gu: 'પાવડરી મિલ્ડ્યુ' },
+      'apple scab': { en: 'Apple Scab', hi: 'एप्पल स्कैब', gu: 'આપલ સ્કેબ' },
+      'black rot': { en: 'Black Rot', hi: 'ब्लैक रोट', gu: 'બ્લેક રોટ' },
+      'cedar apple rust': { en: 'Cedar Apple Rust', hi: 'सिडार एप्पल रस्ट', gu: 'સિડાર એપલ રસ્ટ' },
+      healthy: { en: 'Healthy', hi: 'स्वस्थ', gu: 'સ્વસ્થ' },
+      'cercospora leaf spot / gray leaf spot': {
+        en: 'Cercospora Leaf Spot / Gray Leaf Spot',
+        hi: 'सेरकोस्पोरा लीफ स्पॉट / ग्रे लीफ स्पॉट',
+        gu: 'સર્કોસ્પોરા પાન ડાઘ / ગ્રે પાન ડાઘ',
+      },
+      'common rust': { en: 'Common Rust', hi: 'कॉमन रस्ट', gu: 'કોમન રસ્ટ' },
+      'northern leaf blight': { en: 'Northern Leaf Blight', hi: 'नॉर्दर्न लीफ ब्लाइट', gu: 'નોર્થન પાન બ્લાઇટ' },
+      'early blight': { en: 'Early Blight', hi: 'अर्ली ब्लाइट', gu: 'અરલી બ્લાઇટ' },
+      'late blight': { en: 'Late Blight', hi: 'लेट ब्लाइट', gu: 'લેટ બ્લાઇટ' },
+      'leaf mold': { en: 'Leaf Mold', hi: 'लीफ mould', gu: 'પાનનું mould' },
+      'bacterial spot': { en: 'Bacterial Spot', hi: 'बैक्टीरियल स्पॉट', gu: 'બેક્ટેરિયલ સ્પોટ' },
+      'tomato mosaic virus': { en: 'Tomato Mosaic Virus', hi: 'टमाटो मोज़ेक वायरस', gu: 'ટમેટા મોઝેક વાયરસ' },
+    };
+
+    return diseaseMap[normalized]?.[language] ?? name;
+  };
+
+  const normalizeText = (value: string) =>
+    value
+      .trim()
+      .toLowerCase()
+      .replace(/[_/\\-]+/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+
+  const localizeCropType = (value: string) => {
+    const normalized = normalizeText(value);
+    const cropMap: Record<string, Record<'en' | 'hi' | 'gu', string>> = {
+      tomato: { en: 'Tomato', hi: 'टमाटर', gu: 'ટમેટા' },
+      potato: { en: 'Potato', hi: 'आलू', gu: 'બટાકા' },
+      corn: { en: 'Corn', hi: 'मक्का', gu: 'મકાઈ' },
+      maize: { en: 'Maize', hi: 'मक्का', gu: 'મકાઈ' },
+      apple: { en: 'Apple', hi: 'सेब', gu: 'સફરજન' },
+      grape: { en: 'Grape', hi: 'अंगूर', gu: 'દ્રાક્ષ' },
+      pepper: { en: 'Pepper', hi: 'मिर्च', gu: 'મરચાં' },
+      cherry: { en: 'Cherry', hi: 'चेरी', gu: 'ચેરી' },
+    };
+
+    return cropMap[normalized]?.[language] ?? value;
+  };
+
+  const localizeGrowthStage = (value: string) => {
+    const normalized = normalizeText(value);
+    const stageMap: Record<string, Record<'en' | 'hi' | 'gu', string>> = {
+      'vegetative growth': { en: 'Vegetative foliage growth', hi: 'पत्ती विकास / पत्तियों का विकास', gu: 'પાંદડા વિકાસ / પાંદડાની વૃદ્ધિ' },
+      'flowering stage': { en: 'Flowering stage', hi: 'फूल आने की अवस्था', gu: 'ફૂલનો વિકાસ' },
+      'fruit development': { en: 'Fruit development', hi: 'फल विकास', gu: 'ફળ વિકાસ' },
+      'seedling stage': { en: 'Seedling stage', hi: 'अंकुरण अवस्था', gu: 'મૂળદિપ અવસ્થા' },
+      'maturity stage': { en: 'Maturity stage', hi: 'परिपक्वता', gu: 'પરિપાક્વता' },
+    };
+
+    return stageMap[normalized]?.[language] ?? value;
+  };
+
+  const localizeAdviceEntries = (items: string[] | undefined, type: 'description' | 'precautions') => {
+    const diseaseKey = normalizeText(diseaseName || '');
+    const adviceMap: Record<string, Record<'en' | 'hi' | 'gu', { description: string[]; precautions: string[] }>> = {
+      'powdery mildew': {
+        en: {
+          description: [
+            'A fungal disease that produces a characteristic white, powder-like growth on leaves and young plant tissues.',
+            'White powdery coating on leaves',
+            'Distorted young leaves',
+            'Reduced plant growth',
+            'Affected shoots may become weakened',
+          ],
+          precautions: [
+            'Remove severely affected plant material.',
+            'Improve air circulation around the plant.',
+            'Avoid excessive nitrogen fertilization.',
+            'Monitor new growth regularly.',
+          ],
+        },
+        hi: {
+          description: [
+            'यह एक कवकजनित रोग है जो पत्तियों और युवा पौधों की टिशू पर सफेद, पाउडर जैसा विकास बनाता है।',
+            'पत्तियों पर सफेद पाउडर जैसापन',
+            'नरम और विकृत युवा पत्तियां',
+            'पौधे की वृद्धि कम हो जाती है',
+            'प्रभावित तनों की मजबूती कम हो सकती है',
+          ],
+          precautions: [
+            'काफी अधिक प्रभावित भागों को हटा दें।',
+            'पौधे के आसपास हवा का प्रवाह बेहतर बनाएं।',
+            'अत्यधिक नाइट्रोजन उर्वरक का उपयोग न करें।',
+            'नई वृद्धि का नियमित रूप से निरीक्षण करें।',
+          ],
+        },
+        gu: {
+          description: [
+            'આ ફંગસથી થતો રોગ પાંદડા અને jeunes નરમ ભાગો પર સફેદ, પાઉડર જેવી_grwoth બનાવે છે.',
+            'પાંદડાં પર સફેદ પાઉડર જેવી કોટિંગ',
+            'વિકૃત નાનાં પાંદડા',
+            'પાકની વૃદ્ધિ ઘટી જાય છે',
+            'સપડેલા શાખાઓ નબળા થઈ શકે છે',
+          ],
+          precautions: [
+            'ઘણું અસરગ્રસ્ત છોડના ભાગો દૂર કરો.',
+            'છોડની આસપાસ હવાની જાળવણી સુધારો.',
+            'વધારે નાઇટ્રોજન ખાતરનો ઉપયોગ ટાળો.',
+            'નવા વિકાસનું નિયમિત નિરીક્ષણ કરો.',
+          ],
+        },
+      },
+      'late blight': {
+        en: {
+          description: [
+            'A serious disease that can rapidly damage tomato foliage and fruit under favorable conditions.',
+            'Dark or water-soaked leaf lesions',
+            'Rapid browning of affected foliage',
+            'Dark lesions on stems',
+            'Fruit may develop dark, firm lesions',
+          ],
+          precautions: [
+            'Remove severely affected plant material.',
+            'Avoid overhead watering.',
+            'Improve air circulation.',
+            'Monitor nearby plants closely.',
+            'Seek local agricultural guidance if symptoms spread rapidly.',
+          ],
+        },
+        hi: {
+          description: [
+            'यह एक गंभीर रोग है जो अनुकूल परिस्थितियों में टमाटर की पत्तियों और फलों को तेजी से नुकसान पहुंचा सकता है।',
+            'पत्तियों पर गहरे या पानी से भीगे हुए घाव',
+            'प्रभावित पत्तियों का तेजी से भूरा होना',
+            'तनों पर गहरे घाव',
+            'फलों पर गहरे और कठोर घाव बन सकते हैं',
+          ],
+          precautions: [
+            'बहुत अधिक प्रभावित पौधों के हिस्सों को हटा दें।',
+            'ऊपर से पानी देने से बचें।',
+            'हवा का प्रवाह बेहतर बनाएं।',
+            'पास के पौधों की नियमित निगरानी करें।',
+            'यदि लक्षण तेजी से फैलें तो स्थानीय कृषि विशेषज्ञ से सलाह लें।',
+          ],
+        },
+        gu: {
+          description: [
+            'આ એક ગંભીર રોગ છે જે અનુકૂળ પરિસ્થિતિઓમાં ટામેટાના પાંદડા અને ફળને ઝડપથી નુકસાન પહોંચાડી શકે છે.',
+            'પાંદડા પર ઘેરા અથવા પાણીથી ભીના થયેલા ડાઘા',
+            'અસરગ્રસ્ત પાંદડાં ઝડપથી ભૂરા થઈ જાય છે',
+            'થડ પર ઘેરા ડાઘા',
+            'ફળ પર ઘેરા અને કઠણ ડાઘા થઈ શકે છે',
+          ],
+          precautions: [
+            'ખૂબ અસરગ્રસ્ત છોડના ભાગો દૂર કરો.',
+            'ઉપરથી પાણી આપવાનું ટાળો.',
+            'હવાની અવરજવર સુધારો.',
+            'નજીકના છોડનું નિયમિત નિરીક્ષણ કરો.',
+            'લક્ષણો ઝડપથી ફેલાય તો સ્થાનિક કૃષિ નિષ્ણાતની સલાહ લો.',
+          ],
+        },
+      },
+    };
+
+    const entry = adviceMap[diseaseKey]?.[language];
+    if (!entry) return items ?? [];
+    return type === 'description' ? entry.description : entry.precautions;
+  };
+
+  const localizedDiseaseName = localizeDiseaseName(diseaseName);
+  const localizedScientificName = scientificName ? scientificName.replace(/[_/]+/g, ' ').replace(/\s+/g, ' ').trim() : undefined;
+  const localizedCropType = localizeCropType(cropType || '');
+  const localizedGrowthStage = localizeGrowthStage(growthStage || '');
+  const localizedAiFindings = localizeAdviceEntries(aiFindings, 'description');
+  const localizedRecommendedActions = localizeAdviceEntries(recommendedActions, 'precautions');
+  const localizedSpecimenLabel =
+    language === 'hi' ? 'पत्ती नमूना' : language === 'gu' ? 'નમૂના પાંદડા' : 'Specimen Leaf';
+  const localizedHeatmapLabel = language === 'hi' ? 'एआई हीटमैप' : language === 'gu' ? 'એઆઈ હીટમેપ' : 'AI Heatmap';
 
   // Status-dependent styling and badges
   const isHealthy = status === 'healthy';
@@ -84,14 +269,14 @@ export const DiseaseResult: React.FC<DiseaseResultProps> = ({
             <div className="relative rounded-2xl overflow-hidden bg-[#0D3B2A] aspect-square flex items-center justify-center border border-[#E2E8F0] shadow-md">
               <img
                 src={activeImageTab === 'heatmap' && heatmapUrl ? heatmapUrl : originalImageSrc}
-                alt={diseaseName}
+                alt={localizedDiseaseName}
                 className="w-full h-full object-contain"
               />
 
               {/* Tag indicator on image */}
               <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/60 backdrop-blur-xs text-white text-[11px] font-semibold flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-[#16834A]" />
-                <span>{activeImageTab === 'heatmap' ? 'AI Heatmap' : 'Specimen Leaf'}</span>
+                <span>{activeImageTab === 'heatmap' ? localizedHeatmapLabel : localizedSpecimenLabel}</span>
               </div>
             </div>
 
@@ -125,8 +310,8 @@ export const DiseaseResult: React.FC<DiseaseResultProps> = ({
 
             {/* Specimen metadata pill */}
             <div className="p-3 rounded-xl bg-[#F7FAF8] border border-[#E2E8F0] text-xs text-[#66736B] flex items-center justify-between">
-              <span>{cropType}</span>
-              {growthStage && <span className="font-semibold text-[#17211B]">{growthStage}</span>}
+              <span>{localizedCropType}</span>
+              {localizedGrowthStage && <span className="font-semibold text-[#17211B]">{localizedGrowthStage}</span>}
             </div>
           </div>
 
@@ -136,11 +321,11 @@ export const DiseaseResult: React.FC<DiseaseResultProps> = ({
               <div>
                 <div className="mb-2">{statusBadge()}</div>
                 <h2 className="text-2xl sm:text-4xl font-black text-[#0D3B2A] tracking-tight">
-                  {diseaseName}
+                  {localizedDiseaseName}
                 </h2>
-                {scientificName && (
+                {localizedScientificName && (
                   <p className="text-xs sm:text-sm text-[#66736B] italic font-serif mt-0.5">
-                    {scientificName}
+                    {localizedScientificName}
                   </p>
                 )}
               </div>
@@ -170,14 +355,14 @@ export const DiseaseResult: React.FC<DiseaseResultProps> = ({
             )}
 
             {/* AI Findings List */}
-            {aiFindings && aiFindings.length > 0 && (
+            {localizedAiFindings.length > 0 && (
               <div className="space-y-3">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-[#66736B] flex items-center gap-1.5">
                   <Eye className="w-3.5 h-3.5 text-[#16834A]" />
                   <span>{t.diseaseResult.findingsTitle}</span>
                 </h4>
                 <ul className="space-y-2">
-                  {aiFindings.map((finding, idx) => (
+                  {localizedAiFindings.map((finding, idx) => (
                     <li
                       key={idx}
                       className="flex items-start gap-2.5 text-xs sm:text-sm font-medium text-[#17211B]"
@@ -191,14 +376,14 @@ export const DiseaseResult: React.FC<DiseaseResultProps> = ({
             )}
 
             {/* Recommended Actions Checklist */}
-            {recommendedActions && recommendedActions.length > 0 && (
+            {localizedRecommendedActions.length > 0 && (
               <div className="space-y-3 pt-2">
                 <h4 className="text-xs font-bold uppercase tracking-wider text-[#66736B] flex items-center gap-1.5">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#16834A]" />
                   <span>{t.diseaseResult.actionsTitle}</span>
                 </h4>
                 <div className="space-y-2">
-                  {recommendedActions.map((action, idx) => (
+                  {localizedRecommendedActions.map((action, idx) => (
                     <div
                       key={idx}
                       className="flex items-start gap-3 p-3 rounded-xl bg-[#F7FAF8] border border-[#E2E8F0]/80 text-xs sm:text-sm font-medium text-[#17211B]"
@@ -260,8 +445,8 @@ export const DiseaseResult: React.FC<DiseaseResultProps> = ({
               <span className="text-xs font-extrabold uppercase tracking-wider text-[#16834A]">
                 Comprehensive Diagnostic Report
               </span>
-              <h3 className="text-2xl font-black text-[#0D3B2A] mt-1">{diseaseName}</h3>
-              {scientificName && <p className="text-sm italic text-[#66736B]">{scientificName}</p>}
+              <h3 className="text-2xl font-black text-[#0D3B2A] mt-1">{localizedDiseaseName}</h3>
+              {localizedScientificName && <p className="text-sm italic text-[#66736B]">{localizedScientificName}</p>}
             </div>
 
             <div className="space-y-4">
